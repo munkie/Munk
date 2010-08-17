@@ -10,6 +10,7 @@
  * @property string $sortname
  * @property string $page
  * @property string $resolution
+ * @property string $begindate
  * @property string $enddate
  * @property string $type
  * @property string $quality
@@ -28,6 +29,7 @@ class Munk_MusicBrainz_Result_Artist extends Munk_MusicBrainz_Result
         'sortname'        => null,
         'page'            => null,
         'resolution'      => null,
+        'begindate'       => null,
         'enddate'         => null,
         'type'            => null,
         'quality'         => null,
