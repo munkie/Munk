@@ -46,9 +46,9 @@ abstract class Munk_MusicBrainz_Abstract
     public function setOptions(array $options)
     {
         foreach ($options as $option => $value) {
-            $method = 'set' . $options;
+            $method = 'set' . $option;
             if (method_exists($this, $method)) {
-                $this->$method($options);
+                $this->$method($value);
             }
         }
     }
