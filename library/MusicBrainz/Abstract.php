@@ -6,15 +6,28 @@
  */
 abstract class Munk_MusicBrainz_Abstract
 {
+    /*
+     * Types
+     */
+    const TYPE_ARTIST = 'Artist';
+    const TYPE_ALIAS  = 'Alias';
+    
+    /*
+     * Artist types
+     */
+    const ARTIST_TYPE_UNKNOWN    = 0;
+    const ARTIST_TYPE_PERSON     = 1;
+    const ARTIST_TYPE_GROUP      = 2;
+    
     /**
      * 
-     * @var unknown_type
+     * @var Zend_Db_Adapter_Pdo_Pgsql
      */
     protected $_db;
     
     /**
      * 
-     * @var unknown_type
+     * @var integer
      */
     protected $_limit = 25;
     
@@ -153,28 +166,5 @@ abstract class Munk_MusicBrainz_Abstract
     {
         $resultSetClass = 'Munk_MusicBrainz_ResultSet_' . $resultSetName;
         return new $resultSetClass($data);
-    }
-    
-    /**
-     * 
-     * @param string  $resultSetName
-     * @param string  $query
-     * @param integer $offset
-     * @param integer $limit
-     * 
-     * @return Munk_MusicBrainz_ResultSet_Interface|false
-     */
-    protected function _search($resultSetName, $query = null, $offset = null, $limit = null)
-    {
-        if (null === $offset) {
-            $offset = 0;
-        }
-        if (null === $limit) {
-            $limit = $this->getLimit();
-        }
-        
-        $data = null;
-        
-        return $this->_createResultSet($resultSetName, $data);
     }
 }

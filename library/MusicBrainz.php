@@ -15,7 +15,7 @@ class Munk_MusicBrainz extends Munk_MusicBrainz_Abstract
     public function getArtist($mbid)
     {
         $query = "SELECT * FROM artist WHERE gid = ?";
-        return $this->_query('Artist', $query, $mbid);
+        return $this->_query(self::TYPE_ARTIST, $query, $mbid);
     }
     
     /**
@@ -30,7 +30,7 @@ class Munk_MusicBrainz extends Munk_MusicBrainz_Abstract
     {
         $term = $name;
         $query = "artist:($term)(sortname:($term) alias:($term) !artist:($term))";
-        return $this->_search('Artist', $query, $offset, $limit);
+        return $this->search(self::TYPE_ARTIST, $query, $offset, $limit);
     }
     
     /**
@@ -46,6 +46,29 @@ class Munk_MusicBrainz extends Munk_MusicBrainz_Abstract
     
     /**
      * 
+     * @param string  $resultSetName
+     * @param string  $query
+     * @param integer $offset
+     * @param integer $limit
+     * 
+     * @return Munk_MusicBrainz_ResultSet_Interface|false
+     */
+    public function search($resultSetName, $query = null, $offset = null, $limit = null)
+    {
+        if (null === $offset) {
+            $offset = 0;
+        }
+        if (null === $limit) {
+            $limit = $this->getLimit();
+        }
+        
+        $data = null;
+        
+        return $this->_createResultSet($resultSetName, $data);
+    }
+    
+    /**
+     * 
      * @param integer $id
      * @param string  $table
      * 
@@ -57,6 +80,6 @@ class Munk_MusicBrainz extends Munk_MusicBrainz_Abstract
                     FROM $table
                     WHERE ref = ?
                     ORDER BY TimesUsed DESC";
-        return $this->_querySet('Alias', $query, $id);
+        return $this->_querySet(self::TYPE_ALIAS, $query, $id);
     }
 }
