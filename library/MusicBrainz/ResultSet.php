@@ -18,6 +18,85 @@ abstract class Munk_MusicBrainz_ResultSet implements Munk_MusicBrainz_ResultSet_
      */
     protected $_data = array();
     
+    /**
+     * 
+     * @var string
+     */
+    protected $_resultClass;
+    
+    /**
+     * 
+     * @param array $data
+     */
+    public function __construct(array $data = array())
+    {
+        $this->_setupResultClass();
+        $this->setResults($data);
+    }
+    
+    /**
+     * @throws Munk_MusicBrainz_Exception
+     */
+    protected function _setupResultClass()
+    {
+        if (null === $this->_resultClass) {
+            $className = get_class($this);
+            if (0 === strpos($className, 'Munk_MusicBrainz_ResultSet_')) {
+                $this->_resultClass = 'Munk_MusicBrainz_ResultSet_' . substr($className, 23);
+            }
+        }
+        
+        if (!class_exists($this->_resultClass)) {
+            throw new Munk_MusicBrainz_Exception("Result class $this->_resultClass does not exist");
+        }
+    }
+    
+    /**
+     * 
+     * @param Munk_MusicBrainz_Result_Interface|array $result
+     * 
+     * @return Munk_MusicBrainz_ResultSet
+     */
+    public function addResult($result)
+    {
+        if ($result instanceof $this->_resultClass) {
+            $this->_data[] = $result;
+        } else if (is_array($result)) {
+            $this->_data[] = new $this->_resultClass($result);
+        } else {
+            throw new Munk_MusicBrainz_Exception('Invalid result provided');
+        }
+    }
+    
+    /**
+     * 
+     * @param array $data
+     */
+    public function addResults(array $data)
+    {
+        foreach ($data as $result) {
+            $this->addResult($result);
+        }
+    }
+    
+    /**
+     * 
+     * @param array $data
+     */
+    public function setResults(array $data)
+    {
+        $this->clearResults();
+        $this->addResults($data);
+    }
+    
+    /**
+     * 
+     */
+    public function clearResults()
+    {
+        $this->_data = array();
+    }
+    
 	/**
      * 
      */
@@ -27,15 +106,15 @@ abstract class Munk_MusicBrainz_ResultSet implements Munk_MusicBrainz_ResultSet_
     }
 
 	/**
-     * 
+     * @return Munk_MusicBrainz_Result_Interface
      */
     public function current()
     {
-        
+        return $this->_data[$this->_position];
     }
 
 	/**
-     * 
+     * @return integer
      */
     public function key()
     {
@@ -47,7 +126,7 @@ abstract class Munk_MusicBrainz_ResultSet implements Munk_MusicBrainz_ResultSet_
      */
     public function next()
     {
-        
+        $this->_position++;
     }
 
 	/**
@@ -63,14 +142,17 @@ abstract class Munk_MusicBrainz_ResultSet implements Munk_MusicBrainz_ResultSet_
      */
     public function seek($position)
     {
-        
+        $this->_position = $position;
+        if (!$this->valid()) {
+            throw new OutOfBoundsException();
+        }
     }
 
 	/**
-     * 
+     * @return boolean
      */
     public function valid()
     {
-        
+        return (array_key_exists($this->_position, $this->_data));
     }
 }
