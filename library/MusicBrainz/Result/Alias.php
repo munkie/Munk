@@ -4,7 +4,7 @@
  * @author munkie
  *
  */
-class Munk_MusicBrainz_Result_Alias extends Munk_MusicBrainz_Result
+class Munk_MusicBrainz_Result_Alias extends Munk_MusicBrainz_Result_Abstract
 {
     
 }

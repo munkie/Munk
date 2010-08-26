@@ -13,7 +13,7 @@ abstract class Munk_MusicBrainz_Result_Abstract extends Munk_Util_DataObject_Abs
      * 
      * @return Munk_MusicBrainz_Result_Abstract
      */
-    static public function factory($type, $data)
+    static public function factory($type, $data = null)
     {
         $class = 'Munk_MusicBrainz_Result_' . $type;
         if (!class_exists($class)) {

@@ -3,9 +3,8 @@
  * 
  * @author munkie
  *
- * @property string $id
  * @property string $name
- * @property string $gid
+ * @property string $mbid
  * @property string $modpending
  * @property string $sortname
  * @property string $page
@@ -19,7 +18,7 @@
  * @property string $mbid
  * 
  */
-class Munk_MusicBrainz_Result_Artist extends Munk_MusicBrainz_Result
+class Munk_MusicBrainz_Result_Artist extends Munk_MusicBrainz_Result_Abstract
 {
     protected $_data = array(
         'id'              => null,
