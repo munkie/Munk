@@ -4,6 +4,21 @@
  * @author munkie
  * 
  * @property integer $limit
+ * @property integer $offset
+ * @property integer $query
+ * 
+ * @method string getLimit()
+ * @method boolean issetLimit()
+ * @method Munk_MusicBrainz_Query_Abstract unsetLimit()
+ *
+ * @method string getOffset()
+ * @method boolean issetOffset()
+ * @method Munk_MusicBrainz_Query_Abstract unsetOffset()
+ * 
+ * @method string getQuery()
+ * @method Munk_MusicBrainz_Query_Abstract setQuery($query)
+ * @method boolean issetQuery()
+ * @method Munk_MusicBrainz_Query_Abstract unsetQuery()
  */
 abstract class Munk_MusicBrainz_Query_Abstract extends Munk_Util_DataObject_Abstract
 {
@@ -14,22 +29,29 @@ abstract class Munk_MusicBrainz_Query_Abstract extends Munk_Util_DataObject_Abst
     protected $_exceptionClass = 'Munk_MusicBrainz_Search_Exception';
     
     /**
+     * Basic query data
      * 
-     * @var integer
+     * @var array
      */
-    protected $_limit = 25;
+    protected $_queryData = array(
+        'limit'  => 25,
+        'offset' => null,
+        'query'  => null,
+    );
     
     /**
-     * @return integer
+     * 
+     * @param array $data
      */
-    public function getLimit()
+    public function __construct(array $data = null)
     {
-        return $this->_limit;
+        $this->_data += $this->_queryData;
+        parent::__construct($data);
     }
     
     /**
      * 
-     * @param $limit
+     * @param  integer $limit
      * @return Munk_MusicBrainz_Query_Abstract
      */
     public function setLimit($limit)
@@ -38,26 +60,17 @@ abstract class Munk_MusicBrainz_Query_Abstract extends Munk_Util_DataObject_Abst
         if ($limit < 1 || $limit > 100) {
             $this->_fault("Invalid limit value. Must be integer beetween 1 and 100");
         }
-        
-        $this->_limit = $limit;
-        return $this;
+        return $this->_set('limit', $limit);
     }
     
     /**
-     * @return boolean
-     */
-    public function issetLimit()
-    {
-        return isset($this->_limit);
-    }
-    
-    /**
+     * 
+     * @param integer $offset
      * @return Munk_MusicBrainz_Query_Abstract
      */
-    public function unsetLimit()
+    public function setOffset($offset)
     {
-        $this->_limit = null;
-        return $this;
+        return $this->_set('offset', (int) $offset);
     }
     
     /**
@@ -69,6 +82,30 @@ abstract class Munk_MusicBrainz_Query_Abstract extends Munk_Util_DataObject_Abst
      */
     public function toHttpQuery($numericPrefix = null, $argSeparator = null)
     {
-        return http_build_query($this->toArray(), $numericPrefix, $argSeparator);
+        return http_build_query($this->toArray(true), $numericPrefix, $argSeparator);
+    }
+    
+    /**
+     * 
+     * @param boolean $filterNullValues
+     * @return array
+     */
+    public function toArray($filterNullValues = false)
+    {
+        $data = parent::toArray();
+        if ($filterNullValues) {
+            $data = array_filter($data, array($this, 'isNotNull'));
+        }
+        return $data;
+    }
+    
+    /**
+     * 
+     * @param  mixed $value
+     * @return boolean
+     */
+    public function isNotNull($value)
+    {
+        return null !== $value;
     }
 }
