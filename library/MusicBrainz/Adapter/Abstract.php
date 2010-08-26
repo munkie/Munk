@@ -17,7 +17,7 @@ abstract class Munk_MusicBrainz_Adapter_Abstract implements Munk_MusicBrainz_Ada
      * 
      * @throws Munk_MusicBrainz_Exception
      */
-    protected function _makeQuery($type, $filter = null, $limit = null, $offset = null)
+    protected function _makeFilter($type, $filter = null, $limit = null, $offset = null)
     {
         if (is_array($filter) || null === $filter) {
             $filter = Munk_MusicBrainz_Filter_Abstract::factory($type, $filter);
@@ -90,8 +90,8 @@ abstract class Munk_MusicBrainz_Adapter_Abstract implements Munk_MusicBrainz_Ada
         if (is_string($filter)) {
             $filter = array('name' => $filter);
         }
-        $filter = $this->_makeQuery('Artist', $filter, $limit, $offset);
-        return $this->_searchArtist($filter);
+        $filter = $this->_makeFilter('Artist', $filter, $limit, $offset);
+        return $this->_searchArtists($filter);
     }
     
     /**
