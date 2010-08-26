@@ -71,9 +71,10 @@ abstract class Munk_MusicBrainz_Adapter_Rest_Mapper_Abstract
     /**
      * @return Munk_MusicBrainz_Result_Abstract
      */
-    public function getResult()
+    public function getResult($resultXPath = null)
     {
-        $results = $this->_sxml->xpath($this->_resultXPath);
+        $resultXPath = (null !== $resultXPath) ? $resultXPath : $this->_resultXPath;
+        $results = $this->_sxml->xpath($resultXPath);
         if (is_array($results) && count($results) > 0) {
             return $this->_getResult($results[0]);
         }
@@ -82,11 +83,13 @@ abstract class Munk_MusicBrainz_Adapter_Rest_Mapper_Abstract
     /**
      * @return Munk_MusicBrainz_ResultSet_Abstract
      */
-    public function getResultSet()
+    public function getResultSet($resultSetXPath = null)
     {
+        $resultSetXPath = (null !== $resultSetXPath) ? $resultSetXPath : $this->_resultSetXPath;
+
         $resultSet = Munk_MusicBrainz_ResultSet_Abstract::factory($this->_type);
         
-        $items = $this->_sxml->xpath($this->_resultSetXPath);
+        $items = $this->_sxml->xpath($resultSetXPath);
         if (is_array($items) && count($items) > 0) {
             foreach ($items as $position => $item) {
                 $resultSet->addResult($this->_getResult($item));
