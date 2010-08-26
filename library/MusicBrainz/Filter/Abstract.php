@@ -26,7 +26,7 @@ abstract class Munk_MusicBrainz_Filter_Abstract extends Munk_Util_DataObject_Abs
      * 
      * @var string
      */
-    protected $_exceptionClass = 'Munk_MusicBrainz_Search_Exception';
+    protected $_exceptionClass = 'Munk_MusicBrainz_Filter_Exception';
     
     /**
      * Basic query data
