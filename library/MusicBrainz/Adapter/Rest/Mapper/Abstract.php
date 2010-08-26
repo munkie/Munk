@@ -84,19 +84,21 @@ abstract class Munk_MusicBrainz_Adapter_Rest_Mapper_Abstract
      */
     public function getResultSet()
     {
+        $resultSet = Munk_MusicBrainz_ResultSet_Abstract::factory($this->_type);
+        
         $items = $this->_sxml->xpath($this->_resultSetXPath);
-        $data = array();
         if (is_array($items) && count($items) > 0) {
             foreach ($items as $position => $item) {
-                $data[] = $this->_getResult($item, $this->_resultSetXPath, $position);
+                $resultSet->addResult($this->_getResult($item, $this->_resultSetXPath, $position));
             }
         }
-        $resultSet = Munk_MusicBrainz_ResultSet_Abstract::factory($this->_type, $data);
+        
         $root = $this->_sxml->xpath('/*/*[@count and @offset]');
         if (isset($root[0]['count'], $root[0]['offset'])) {
             $resultSet->setCount((string) $root[0]['count']);
             $resultSet->setOffset((string) $root[0]['offset']);
         }
+        
         return $resultSet;
     }
     
@@ -106,6 +108,7 @@ abstract class Munk_MusicBrainz_Adapter_Rest_Mapper_Abstract
     protected function _getResult(SimpleXMLElement $sxml, $preXpath, $position)
     {
         $result = Munk_MusicBrainz_Result_Abstract::factory($this->_type);
+        $position++;
         $preXpath.= "[position() = $position]"; 
         foreach ($this->_map as $field => $params) {
             if (is_string($params)) {
