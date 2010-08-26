@@ -5,7 +5,6 @@
  *
  * @property string $name
  * @property string $mbid
- * @property string $modpending
  * @property string $sortname
  * @property string $page
  * @property string $resolution
@@ -13,18 +12,14 @@
  * @property string $enddate
  * @property string $type
  * @property string $quality
- * @property string $modpending_qual
- * 
- * @property string $mbid
+ * @property string $disambiguation
  * 
  */
 class Munk_MusicBrainz_Result_Artist extends Munk_MusicBrainz_Result_Abstract
 {
     protected $_data = array(
-        'id'              => null,
         'name'            => null,
         'mbid'            => null,
-        'modpending'      => null,
         'sortname'        => null,
         'page'            => null,
         'resolution'      => null,
@@ -32,7 +27,7 @@ class Munk_MusicBrainz_Result_Artist extends Munk_MusicBrainz_Result_Abstract
         'enddate'         => null,
         'type'            => null,
         'quality'         => null,
-        'modpending_qual' => null,
+        'disambiguation'  => null,
     );
     
     /**
