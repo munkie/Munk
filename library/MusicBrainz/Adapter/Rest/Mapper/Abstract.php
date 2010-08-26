@@ -75,7 +75,7 @@ abstract class Munk_MusicBrainz_Adapter_Rest_Mapper_Abstract
     {
         $results = $this->_sxml->xpath($this->_resultXPath);
         if (is_array($results) && count($results) > 0) {
-            return $this->_getResult($results[0], $this->_resultXPath, 0);
+            return $this->_getResult($results[0]);
         }
     }
     
@@ -89,7 +89,7 @@ abstract class Munk_MusicBrainz_Adapter_Rest_Mapper_Abstract
         $items = $this->_sxml->xpath($this->_resultSetXPath);
         if (is_array($items) && count($items) > 0) {
             foreach ($items as $position => $item) {
-                $resultSet->addResult($this->_getResult($item, $this->_resultSetXPath, $position));
+                $resultSet->addResult($this->_getResult($item));
             }
         }
         
@@ -105,16 +105,14 @@ abstract class Munk_MusicBrainz_Adapter_Rest_Mapper_Abstract
     /**
      * @return Munk_MusicBrainz_Result_Abstract
      */
-    protected function _getResult(SimpleXMLElement $sxml, $preXpath, $position)
+    protected function _getResult(SimpleXMLElement $sxml)
     {
         $result = Munk_MusicBrainz_Result_Abstract::factory($this->_type);
-        $position++;
-        $preXpath.= "[position() = $position]"; 
         foreach ($this->_map as $field => $params) {
             if (is_string($params)) {
                 $params = array('xpath' => $params);
             }
-            $xpath = $preXpath . $params['xpath'];
+            $xpath = '.' . $params['xpath'];
             $value = $sxml->xpath($xpath);
             if (isset($value[0])) {
                 $value = $value[0];

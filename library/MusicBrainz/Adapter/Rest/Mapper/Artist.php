@@ -29,11 +29,12 @@ class Munk_MusicBrainz_Adapter_Rest_Mapper_Artist extends Munk_MusicBrainz_Adapt
      * @var array
      */
     protected $_map = array(
-        'mbid' => '/@id',
-        'type' => '/@type',
-        'name' => '/name',
-        'sortname' => '/sort-name',
-        'begindate' => '/life-span/@begin',
-        'enddate' => '/life-span/@end',
+        'mbid'           => '/@id',
+        'type'           => '/@type',
+        'name'           => '/name',
+        'sortname'       => '/sort-name',
+        'begindate'      => '/life-span/@begin',
+        'enddate'        => '/life-span/@end',
+        'disambiguation' => '/disambiguation',
     );
 }
