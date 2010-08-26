@@ -64,6 +64,28 @@ abstract class Munk_MusicBrainz_Adapter_Abstract implements Munk_MusicBrainz_Ada
     
     /**
      * 
+     * @param string $mbid
+     * @param mixed  $inc
+     * 
+     * @return Munk_MusicBrainz_Result_Artist
+     */
+    public function getArtist($mbid, $inc = null)
+    {
+        $inc = $this->_makeInc(Munk_MusicBrainz::TYPE_ARTIST, $inc);
+        return $this->_getArtist($mbid, $inc);
+    }
+    
+    /**
+     * 
+     * @param string $mbid
+     * @param Munk_MusicBrainz_Inc_Artist $inc
+     * 
+     * @return Munk_MusicBrainz_Result_Artist
+     */
+    abstract protected function _getArtist($mbid, Munk_MusicBrainz_Inc_Artist $inc);
+    
+    /**
+     * 
      * @param mixed   $query
      * @param mixed   $inc
      * @param integer $limit
@@ -71,15 +93,21 @@ abstract class Munk_MusicBrainz_Adapter_Abstract implements Munk_MusicBrainz_Ada
      * 
      * @return Munk_MusicBrainz_ResultSet_Artist
      */
-    public function searchArtists($query = null, $inc = null, $limit = null, $offset = null)
+    public function searchArtists($query = null, $limit = null, $offset = null)
     {
         if (is_string($query)) {
             $query = array('name' => $query);
         }
         $query = $this->_makeQuery('Artist', $query, $limit, $offset);
-        $inc   = $this->_makeInc('Artist', $inc);
-        return $this->_searchArtist($query, $inc);
+        return $this->_searchArtist($query);
     }
     
-    abstract protected function _searchArtists(Munk_MusicBrainz_Query_Artist $query, Munk_MusicBrainz_Inc_Artist $inc);
+    /**
+     * 
+     * @param Munk_MusicBrainz_Query_Artist $query
+     * @param Munk_MusicBrainz_Inc_Artist $inc
+     * 
+     * @return Munk_MusicBrainz_ResultSet_Artist
+     */
+    abstract protected function _searchArtists(Munk_MusicBrainz_Query_Artist $query);
 }
