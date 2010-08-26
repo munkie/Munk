@@ -49,7 +49,7 @@ abstract class Munk_MusicBrainz_Inc_Abstract extends Munk_Util_DataObject_Abstra
      */
     public function toString()
     {
-        return $this->__toString();
+        return implode(' ', array_keys($this->toArray(true)));
     }
     
     /**
@@ -57,7 +57,7 @@ abstract class Munk_MusicBrainz_Inc_Abstract extends Munk_Util_DataObject_Abstra
      */
     public function __toString()
     {
-        return implode(' ', array_keys($this->toArray(true)));
+        return $this->toString();
     }
     
     /**
@@ -81,12 +81,14 @@ abstract class Munk_MusicBrainz_Inc_Abstract extends Munk_Util_DataObject_Abstra
      * @param array $data
      * 
      * @return Munk_MusicBrainz_Inc_Abstract
+     * 
+     * @throws Munk_MusicBrainz_Inc_Exception
      */
     static public function factory($type, array $data = null)
     {
         $class = 'Munk_MusicBrainz_Inc_' . $type;
         if (!class_exists($class)) {
-            throw new Munk_MusicBrainz_Exception("Invalid inc type provided: $type. Class $class does not exist");
+            throw new Munk_MusicBrainz_Inc_Exception("Invalid inc type provided: $type. Class $class does not exist");
         }
 
         return new $class($data);
