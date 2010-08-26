@@ -8,9 +8,21 @@ class Munk_MusicBrainz_Adapter_Rest extends Munk_MusicBrainz_Adapter_Abstract
 {
     /**
      * 
+     * @var Zend_Rest_Client
+     */
+    protected $_restClient;
+    
+    /**
+     * 
      * @var string
      */
-    protected $_restUrl = 'http://musicbrainz.org/ws/1';
+    protected $_uri = 'http://musicbrainz.org/';
+    
+    /**
+     * 
+     * @var string
+     */
+    protected $_uriNamespace = '/ws/1/';
     
     /**
      * 
@@ -42,7 +54,7 @@ class Munk_MusicBrainz_Adapter_Rest extends Munk_MusicBrainz_Adapter_Abstract
         if (!isset($this->_resources[$type])) {
             throw new Munk_MusicBrainz_Exception("Resource for type: $type not found");
         }
-        $resource = '/' . $this->_resources[$type] . '/';
+        $resource = $this->_uriNamespace . $this->_resources[$type] . '/';
         if (null !== $mbid) {
             $resource.= $mbid . '/';
         }
@@ -53,6 +65,8 @@ class Munk_MusicBrainz_Adapter_Rest extends Munk_MusicBrainz_Adapter_Abstract
      * 
      * @param string $type
      * @param Munk_MusicBrainz_Filter_Abstract $filter
+     * 
+     * @return SimpleXMLElement
      */
     protected function _requestCollection($type, Munk_MusicBrainz_Filter_Abstract $filter)
     {
@@ -61,9 +75,17 @@ class Munk_MusicBrainz_Adapter_Rest extends Munk_MusicBrainz_Adapter_Abstract
         $params = $filter->toArray(true);
         $params['type'] = $this->_type;
         
-        $response = $this->_request($resource, $params);
+        return $this->_request($resource, $params);
     }
     
+    /**
+     * 
+     * @param string $type
+     * @param string $mbid
+     * @param Munk_MusicBrainz_Inc_Abstract $inc
+     * 
+     * @return SimpleXMLElement
+     */
     protected function _requestResource($type, $mbid, Munk_MusicBrainz_Inc_Abstract $inc)
     {
         $resource = $this->_makeResource($type, $mbid);
@@ -73,8 +95,7 @@ class Munk_MusicBrainz_Adapter_Rest extends Munk_MusicBrainz_Adapter_Abstract
             'inc'  => (string) $inc,
         );
         
-        $response = $this->_request($resource, $params);
-        
+        return $this->_request($resource, $params);
     }
     
     /**
@@ -83,16 +104,23 @@ class Munk_MusicBrainz_Adapter_Rest extends Munk_MusicBrainz_Adapter_Abstract
      * @param array $params
      * @param string $mbid
      * 
-     * @return Zend_Rest_Client_Result
+     * @return SimpleXMLElement
      */
-    protected function _request($resource, array $params, $method = 'Get')
+    protected function _request($resource, array $params, $method = 'get')
     {
         $restClient = $this->getRestClient();
         $restClient->getHttpClient()->resetParameters();
         $method = 'rest' . $method;
+        /* @var $response Zend_Http_Response */
         $response = $restClient->$method($resource, $params);
         
-        return $response;
+        if ($response->isError()) {
+            throw new Munk_MusicBrainz_Exception($response->getMessage(), $response->getStatus());
+        }
+        
+        $body = $response->getBody();
+        $body = str_replace(' xmlns="http://musicbrainz.org/ns/mmd-1.0#"', '', $body);
+        return simplexml_load_string($body);
     }
     
     /**
@@ -101,7 +129,7 @@ class Munk_MusicBrainz_Adapter_Rest extends Munk_MusicBrainz_Adapter_Abstract
     public function getRestClient()
     {
         if (null === $this->_restClient) {
-            $this->_restClient = new Zend_Rest_Client($this->_restUrl);
+            $this->_restClient = new Zend_Rest_Client($this->_uri);
         }
 
         return $this->_restClient;
@@ -125,7 +153,9 @@ class Munk_MusicBrainz_Adapter_Rest extends Munk_MusicBrainz_Adapter_Abstract
      */
     protected function _getArtist($mbid, Munk_MusicBrainz_Inc_Artist $inc)
     {
-        return $this->_requestResource(Munk_MusicBrainz::TYPE_ARTIST, $mbid, $inc);
+        $response = $this->_requestResource(Munk_MusicBrainz::TYPE_ARTIST, $mbid, $inc);
+        $mapper = new Munk_MusicBrainz_Adapter_Rest_Mapper_Artist($response);
+        return $mapper->getResult();
     }
     
     /**
@@ -137,6 +167,8 @@ class Munk_MusicBrainz_Adapter_Rest extends Munk_MusicBrainz_Adapter_Abstract
      */
     protected function _searchArtists(Munk_MusicBrainz_Filter_Artist $filter)
     {
-        return $this->_requestCollection(Munk_MusicBrainz::TYPE_ARTIST, $filter);
+        $response = $this->_requestCollection(Munk_MusicBrainz::TYPE_ARTIST, $filter);
+        $mapper = new Munk_MusicBrainz_Adapter_Rest_Mapper_Artist($response);
+        return $mapper->getResultSet();
     }
 }
