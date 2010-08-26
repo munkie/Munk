@@ -42,7 +42,7 @@ abstract class Munk_Util_DataObject_Abstract
      */
     public function __call($method, $args)
     {
-        if (preg_match('/^(get|set|isset|unset)(.*)$/i', $method, $matches)) {
+        if (preg_match('/^(get|set|isset|unset)(.+)$/i', $method, $matches)) {
             $operation = strtolower($matches[1]);
             $parameter = strtolower($matches[2]);
         
