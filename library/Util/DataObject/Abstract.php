@@ -50,8 +50,8 @@ abstract class Munk_Util_DataObject_Abstract
                 case 'get':
                     return $this->_get($parameter);
                 case 'set':
-                    if (!isset($args[0])) {
-                        throw new Munk_MusicBrainz_Search_Query_Exception("Can't set $parameter - no value was provided");
+                    if (!array_key_exists(0, $args)) {
+                        return $this->_fault("Can't set $parameter - no value was provided");
                     }
                     return $this->_set($parameter, $args[0]);
                 case 'isset':
@@ -61,7 +61,7 @@ abstract class Munk_Util_DataObject_Abstract
             }
         }
         
-        $this->_fault("Invalid method $method invocation");
+        return $this->_fault("Invalid method $method invocation");
     }
     
     /**
@@ -107,7 +107,7 @@ abstract class Munk_Util_DataObject_Abstract
     }
     
     /**
-     * 
+     * @throws Munk_Util_DataObject_Exception
      */
     protected function _fault($message, $code = null)
     {
@@ -125,7 +125,7 @@ abstract class Munk_Util_DataObject_Abstract
             return $this->_data[$parameter];
         }
         
-        $this->_fault("Parameter $parameter does not exist");
+        return $this->_fault("Parameter $parameter does not exist");
     }
     
     /**
@@ -142,7 +142,7 @@ abstract class Munk_Util_DataObject_Abstract
             return $this;
         }
         
-        $this->_fault("Parameter $parameter does not exist");
+        return $this->_fault("Parameter $parameter does not exist");
     }
     
     /**
@@ -157,7 +157,7 @@ abstract class Munk_Util_DataObject_Abstract
             return isset($this->_data[$parameter]);
         }
         
-        $this->_fault("Parameter $parameter does not exist");
+        return $this->_fault("Parameter $parameter does not exist");
     }
     
     /**
@@ -172,7 +172,7 @@ abstract class Munk_Util_DataObject_Abstract
             return $this->_data[$parameter] = null;
         }
         
-        $this->_fault("Parameter $parameter does not exist");
+        return $this->_fault("Parameter $parameter does not exist");
     }
     
     /**
