@@ -72,7 +72,7 @@ abstract class Munk_Util_DataObject_Abstract
     public function __get($name)
     {
         $method = 'get' . $name;
-        return $this->$method($name);
+        return $this->$method();
     }
     
     /**
