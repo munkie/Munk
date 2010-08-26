@@ -63,9 +63,9 @@ class Munk_MusicBrainz
      * Release statuses
      */
     const RELEASE_STATUS_OFFICIAL = 'Official'; // Any release officially sanctioned by the artist and/or their record company. (Most releases will fit into this category.)
-    const RELEASE_STATUS_OFFICIAL = 'Promotion'; // A giveaway release or a release intended to promote an upcoming official release. (e.g. prerelease albums or releases included with a magazine, versions supplied to radio DJs for air-play, etc).
-    const RELEASE_STATUS_OFFICIAL = 'Bootleg'; // An unofficial/underground release that was not sanctioned by the artist and/or the record company.
-    const RELEASE_STATUS_OFFICIAL = 'Pseudo-Release'; // A pseudo-release is a duplicate release for translation/transliteration purposes that does not appear on an actual release as described on 
+    const RELEASE_STATUS_PROMOTION = 'Promotion'; // A giveaway release or a release intended to promote an upcoming official release. (e.g. prerelease albums or releases included with a magazine, versions supplied to radio DJs for air-play, etc).
+    const RELEASE_STATUS_BOOTLEG = 'Bootleg'; // An unofficial/underground release that was not sanctioned by the artist and/or the record company.
+    const RELEASE_STATUS_PSEUDO_RELEASE = 'Pseudo-Release'; // A pseudo-release is a duplicate release for translation/transliteration purposes that does not appear on an actual release as described on 
     
     /**
      * 
