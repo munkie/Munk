@@ -9,18 +9,18 @@
  * 
  * @method string getLimit()
  * @method boolean issetLimit()
- * @method Munk_MusicBrainz_Query_Abstract unsetLimit()
+ * @method Munk_MusicBrainz_Filter_Abstract unsetLimit()
  *
  * @method string getOffset()
  * @method boolean issetOffset()
- * @method Munk_MusicBrainz_Query_Abstract unsetOffset()
+ * @method Munk_MusicBrainz_Filter_Abstract unsetOffset()
  * 
  * @method string getQuery()
- * @method Munk_MusicBrainz_Query_Abstract setQuery($query)
+ * @method Munk_MusicBrainz_Filter_Abstract setQuery($query)
  * @method boolean issetQuery()
- * @method Munk_MusicBrainz_Query_Abstract unsetQuery()
+ * @method Munk_MusicBrainz_Filter_Abstract unsetQuery()
  */
-abstract class Munk_MusicBrainz_Query_Abstract extends Munk_Util_DataObject_Abstract
+abstract class Munk_MusicBrainz_Filter_Abstract extends Munk_Util_DataObject_Abstract
 {
     /**
      * 
@@ -52,7 +52,7 @@ abstract class Munk_MusicBrainz_Query_Abstract extends Munk_Util_DataObject_Abst
     /**
      * 
      * @param  integer $limit
-     * @return Munk_MusicBrainz_Query_Abstract
+     * @return Munk_MusicBrainz_Filter_Abstract
      */
     public function setLimit($limit)
     {
@@ -66,7 +66,7 @@ abstract class Munk_MusicBrainz_Query_Abstract extends Munk_Util_DataObject_Abst
     /**
      * 
      * @param integer $offset
-     * @return Munk_MusicBrainz_Query_Abstract
+     * @return Munk_MusicBrainz_Filter_Abstract
      */
     public function setOffset($offset)
     {
@@ -114,11 +114,11 @@ abstract class Munk_MusicBrainz_Query_Abstract extends Munk_Util_DataObject_Abst
      * @param string $type
      * @param array $data
      * 
-     * @return Munk_MusicBrainz_Query_Abstract
+     * @return Munk_MusicBrainz_Filter_Abstract
      */
     static public function factory($type, array $data = null)
     {
-        $class = 'Munk_MusicBrainz_Query_' . $type;
+        $class = 'Munk_MusicBrainz_Filter_' . $type;
         if (!class_exists($class)) {
             throw new Munk_MusicBrainz_Exception("Invalid query type provided: $type. Class $class does not exist");
         }

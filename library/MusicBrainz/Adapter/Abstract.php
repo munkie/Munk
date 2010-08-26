@@ -9,31 +9,31 @@ abstract class Munk_MusicBrainz_Adapter_Abstract implements Munk_MusicBrainz_Ada
     /**
      * 
      * @param string $type
-     * @param array|Munk_MusicBrainz_Query_Abstract $query
+     * @param array|Munk_MusicBrainz_Filter_Abstract $filter
      * @param integer $limit
      * @param integer $offset
      * 
-     * @return Munk_MusicBrainz_Query_Abstract
+     * @return Munk_MusicBrainz_Filter_Abstract
      * 
      * @throws Munk_MusicBrainz_Exception
      */
-    protected function _makeQuery($type, $query = null, $limit = null, $offset = null)
+    protected function _makeQuery($type, $filter = null, $limit = null, $offset = null)
     {
-        if (is_array($query) || null === $query) {
-            $query = Munk_MusicBrainz_Query_Abstract::factory($type, $query);
-        } else if (!$query instanceof Munk_MusicBrainz_Query_Abstract) {
-            throw new Munk_MusicBrainz_Exception("Invalid query object must be instance of Munk_MusicBrainz_Query_Abstract");
+        if (is_array($filter) || null === $filter) {
+            $filter = Munk_MusicBrainz_Filter_Abstract::factory($type, $filter);
+        } else if (!$filter instanceof Munk_MusicBrainz_Filter_Abstract) {
+            throw new Munk_MusicBrainz_Exception("Invalid query object must be instance of Munk_MusicBrainz_Filter_Abstract");
         }
         
         if (null !== $limit) {
-            $query->setLimit($limit);
+            $filter->setLimit($limit);
         }
         
         if (null !== $offset) {
-            $query->setOffset($offset);
+            $filter->setOffset($offset);
         }
         
-        return $query;
+        return $filter;
     }
     
     /**
@@ -78,28 +78,28 @@ abstract class Munk_MusicBrainz_Adapter_Abstract implements Munk_MusicBrainz_Ada
     
     /**
      * 
-     * @param mixed   $query
+     * @param mixed   $filter
      * @param mixed   $inc
      * @param integer $limit
      * @param integer $offset
      * 
      * @return Munk_MusicBrainz_ResultSet_Artist
      */
-    public function searchArtists($query = null, $limit = null, $offset = null)
+    public function searchArtists($filter = null, $limit = null, $offset = null)
     {
-        if (is_string($query)) {
-            $query = array('name' => $query);
+        if (is_string($filter)) {
+            $filter = array('name' => $filter);
         }
-        $query = $this->_makeQuery('Artist', $query, $limit, $offset);
-        return $this->_searchArtist($query);
+        $filter = $this->_makeQuery('Artist', $filter, $limit, $offset);
+        return $this->_searchArtist($filter);
     }
     
     /**
      * 
-     * @param Munk_MusicBrainz_Query_Artist $query
+     * @param Munk_MusicBrainz_Filter_Artist $filter
      * @param Munk_MusicBrainz_Inc_Artist $inc
      * 
      * @return Munk_MusicBrainz_ResultSet_Artist
      */
-    abstract protected function _searchArtists(Munk_MusicBrainz_Query_Artist $query);
+    abstract protected function _searchArtists(Munk_MusicBrainz_Filter_Artist $filter);
 }

@@ -6,11 +6,11 @@
  * @property string $name
  * 
  * @method string getName()
- * @method Munk_MusicBrainz_Query_Artist setName($name)
+ * @method Munk_MusicBrainz_Filter_Artist setName($name)
  * @method boolean issetName()
- * @method Munk_MusicBrainz_Query_Artist unsetName()
+ * @method Munk_MusicBrainz_Filter_Artist unsetName()
  */
-class Munk_MusicBrainz_Query_Artist extends Munk_MusicBrainz_Query_Abstract
+class Munk_MusicBrainz_Filter_Artist extends Munk_MusicBrainz_Filter_Abstract
 {
     /**
      * 
