@@ -21,8 +21,8 @@ class Munk_MusicBrainz
      */
     const INC_ALIASES = 'aliases';
     const INC_RELEASE_GROUPS = 'release-groups';
-    const INC_SA = 'sa-';
-    const INC_VA = 'va-';
+    const INC_SA = 'sa';
+    const INC_VA = 'va';
     const INC_ARTIST_RELS = 'artist-rels';
     const INC_LABEL_RELS = 'label-rels';
     const INC_RELEASE_RELS = 'release-rels';

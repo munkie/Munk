@@ -67,10 +67,11 @@ abstract class Munk_MusicBrainz_Inc_Abstract extends Munk_Util_DataObject_Abstra
      */
     public function populate(array $data)
     {
-        // convert indexed array to assoc array with true values
-        if (!empty($data) && array_values($data) === $data) {
-            $values = array_fill(0, count($data), true);
-            $data = array_combine($data, $values);
+        foreach ($data as $key => $value) {
+            if (is_int($key)) {
+                $data[$value] = true;
+                unset($data[$key]);
+            }
         }
         return parent::populate($data);
     }
