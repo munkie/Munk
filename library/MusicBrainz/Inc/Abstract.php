@@ -8,6 +8,12 @@ abstract class Munk_MusicBrainz_Inc_Abstract extends Munk_Util_DataObject_Abstra
 {
     /**
      * 
+     * @var string
+     */
+    protected $_exceptionClass = 'Munk_MusicBrainz_Inc_Exception';
+    
+    /**
+     * 
      * @param string $method
      * @param array  $args
      */
