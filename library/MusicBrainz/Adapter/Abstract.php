@@ -15,14 +15,14 @@ abstract class Munk_MusicBrainz_Adapter_Abstract implements Munk_MusicBrainz_Ada
      * 
      * @return Munk_MusicBrainz_Filter_Abstract
      * 
-     * @throws Munk_MusicBrainz_Exception
+     * @throws Munk_MusicBrainz_Adapter_Exception
      */
     protected function _makeFilter($type, $filter = null, $limit = null, $offset = null)
     {
         if (is_array($filter) || null === $filter) {
             $filter = Munk_MusicBrainz_Filter_Abstract::factory($type, $filter);
         } else if (!$filter instanceof Munk_MusicBrainz_Filter_Abstract) {
-            throw new Munk_MusicBrainz_Exception("Invalid query object must be instance of Munk_MusicBrainz_Filter_Abstract");
+            throw new Munk_MusicBrainz_Adapter_Exception("Invalid query object must be instance of Munk_MusicBrainz_Filter_Abstract");
         }
         
         if (null !== $limit) {
@@ -42,13 +42,15 @@ abstract class Munk_MusicBrainz_Adapter_Abstract implements Munk_MusicBrainz_Ada
      * @param array|Munk_MusicBrainz_Inc_Abstract $inc
      * 
      * @return Munk_MusicBrainz_Inc_Abstract
+     * 
+     * @throws Munk_MusicBrainz_Adapter_Exception
      */
     protected function _makeInc($type, $inc = null)
     {
         if (is_array($inc) || null === $inc) {
             $inc = Munk_MusicBrainz_Inc_Abstract::factory($type, $inc);
         } else if (!$inc instanceof Munk_MusicBrainz_Inc_Abstract) {
-            throw new Munk_MusicBrainz_Exception("Invalid inc object must be instance of Munk_MusicBrainz_Inc_Abstract");
+            throw new Munk_MusicBrainz_Adapter_Exception("Invalid inc object must be instance of Munk_MusicBrainz_Inc_Abstract");
         }
 
         return $inc;
@@ -90,14 +92,13 @@ abstract class Munk_MusicBrainz_Adapter_Abstract implements Munk_MusicBrainz_Ada
         if (is_string($filter)) {
             $filter = array('name' => $filter);
         }
-        $filter = $this->_makeFilter('Artist', $filter, $limit, $offset);
+        $filter = $this->_makeFilter(Munk_MusicBrainz::TYPE_ARTIST, $filter, $limit, $offset);
         return $this->_searchArtists($filter);
     }
     
     /**
      * 
      * @param Munk_MusicBrainz_Filter_Artist $filter
-     * @param Munk_MusicBrainz_Inc_Artist $inc
      * 
      * @return Munk_MusicBrainz_ResultSet_Artist
      */

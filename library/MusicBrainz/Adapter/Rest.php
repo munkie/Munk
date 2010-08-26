@@ -47,12 +47,12 @@ class Munk_MusicBrainz_Adapter_Rest extends Munk_MusicBrainz_Adapter_Abstract
      * @param string $type
      * @return string
      * 
-     * @throws Munk_MusicBrainz_Exception
+     * @throws Munk_MusicBrainz_Adapter_Rest_Exception
      */
     protected function _makeResource($type, $mbid = null)
     {
         if (!isset($this->_resources[$type])) {
-            throw new Munk_MusicBrainz_Exception("Resource for type: $type not found");
+            throw new Munk_MusicBrainz_Adapter_Rest_Exception("Resource for type: $type not found");
         }
         $resource = $this->_uriNamespace . $this->_resources[$type] . '/';
         if (null !== $mbid) {
@@ -105,6 +105,8 @@ class Munk_MusicBrainz_Adapter_Rest extends Munk_MusicBrainz_Adapter_Abstract
      * @param string $mbid
      * 
      * @return SimpleXMLElement
+     * 
+     * @throws Munk_MusicBrainz_Adapter_Rest_Exception
      */
     protected function _request($resource, array $params, $method = 'get')
     {
@@ -115,7 +117,7 @@ class Munk_MusicBrainz_Adapter_Rest extends Munk_MusicBrainz_Adapter_Abstract
         $response = $restClient->$method($resource, $params);
         
         if ($response->isError()) {
-            throw new Munk_MusicBrainz_Exception($response->getMessage(), $response->getStatus());
+            throw new Munk_MusicBrainz_Adapter_Rest_Exception($response->getMessage(), $response->getStatus());
         }
         
         $body = $response->getBody();
