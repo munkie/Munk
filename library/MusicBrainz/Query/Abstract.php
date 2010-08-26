@@ -108,4 +108,20 @@ abstract class Munk_MusicBrainz_Query_Abstract extends Munk_Util_DataObject_Abst
     {
         return null !== $value;
     }
+    
+    /**
+     * 
+     * @param string $type
+     * @param array $data
+     * 
+     * @return Munk_MusicBrainz_Query_Abstract
+     */
+    static public function factory($type, array $data = null)
+    {
+        $class = 'Munk_MusicBrainz_Query_' . $type;
+        if (!class_exists($class)) {
+            throw new Munk_MusicBrainz_Exception("Invalid query type provided: $type. Class $class does not exist");
+        }
+        return new $class($data);
+    }
 }

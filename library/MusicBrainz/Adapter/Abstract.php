@@ -19,14 +19,10 @@ abstract class Munk_MusicBrainz_Adapter_Abstract implements Munk_MusicBrainz_Ada
      */
     protected function _makeQuery($type, $query = null, $limit = null, $offset = null)
     {
-        $class = 'Munk_MusicBrainz_Query_' . $type;
-        if (!class_exists($class)) {
-            throw new Munk_MusicBrainz_Exception("Invalid query type provided: $type. Class $class does not exist");
-        }
         if (is_array($query) || null === $query) {
-            $query = new $class($query);
-        } else if (!$query instanceof $class) {
-            throw new Munk_MusicBrainz_Exception("Invalid query object must be instance of $class");
+            $query = Munk_MusicBrainz_Query_Abstract::factory($type, $query);
+        } else if (!$query instanceof Munk_MusicBrainz_Query_Abstract) {
+            throw new Munk_MusicBrainz_Exception("Invalid query object must be instance of Munk_MusicBrainz_Query_Abstract");
         }
         
         if (null !== $limit) {
@@ -49,14 +45,10 @@ abstract class Munk_MusicBrainz_Adapter_Abstract implements Munk_MusicBrainz_Ada
      */
     protected function _makeInc($type, $inc = null)
     {
-        $class = 'Munk_MusicBrainz_Inc_' . $type;
-        if (!class_exists($class)) {
-            throw new Munk_MusicBrainz_Exception("Invalid inc type provided: $type. Class $class does not exist");
-        }
         if (is_array($inc) || null === $inc) {
-            $inc = new $class($inc);
-        } else if (!$inc instanceof $class) {
-            throw new Munk_MusicBrainz_Exception("Invalid inc object must be instance of $class");
+            $inc = Munk_MusicBrainz_Inc_Abstract::factory($type, $inc);
+        } else if (!$inc instanceof Munk_MusicBrainz_Inc_Abstract) {
+            throw new Munk_MusicBrainz_Exception("Invalid inc object must be instance of Munk_MusicBrainz_Inc_Abstract");
         }
 
         return $inc;

@@ -68,4 +68,21 @@ abstract class Munk_MusicBrainz_Inc_Abstract extends Munk_Util_DataObject_Abstra
         }
         return parent::populate($data);
     }
+    
+    /**
+     * 
+     * @param string $type
+     * @param array $data
+     * 
+     * @return Munk_MusicBrainz_Inc_Abstract
+     */
+    static public function factory($type, array $data = null)
+    {
+        $class = 'Munk_MusicBrainz_Inc_' . $type;
+        if (!class_exists($class)) {
+            throw new Munk_MusicBrainz_Exception("Invalid inc type provided: $type. Class $class does not exist");
+        }
+
+        return new $class($data);
+    }
 }
