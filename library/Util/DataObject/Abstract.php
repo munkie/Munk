@@ -23,6 +23,17 @@ abstract class Munk_Util_DataObject_Abstract
     
     /**
      * 
+     * @param array $data
+     */
+    public function __construct(array $data = null)
+    {
+        if (null !== $data) {
+            $this->populate($data);
+        }
+    }
+    
+    /**
+     * 
      * @param string $name
      * @param array  $args
      * 
@@ -51,6 +62,48 @@ abstract class Munk_Util_DataObject_Abstract
         }
         
         $this->_fault("Invalid method $method invocation");
+    }
+    
+    /**
+     * 
+     * @param string $name
+     * @return mixed
+     */
+    public function __get($name)
+    {
+        $method = 'get' . $name;
+        return $this->$method($name);
+    }
+    
+    /**
+     * 
+     * @param $name
+     * @param $value
+     */
+    public function __set($name, $value)
+    {
+        $method = 'set' . $name;
+        return $this->$method($name);
+    }
+    
+    /**
+     * 
+     * @param string $name
+     */
+    public function __isset($name)
+    {
+        $method = 'isset' . $name;
+        return $this->$method($name);
+    }
+    
+    /**
+     * 
+     * @param string $name
+     */
+    public function __unset($name)
+    {
+        $method = 'unset' . $name;
+        return $this->$method($name);
     }
     
     /**
@@ -124,43 +177,26 @@ abstract class Munk_Util_DataObject_Abstract
     
     /**
      * 
-     * @param string $name
-     * @return mixed
+     * @param  array $data
+     * @return Munk_Util_DataObject_Abstract
      */
-    public function __get($name)
+    public function populate(array $data)
     {
-        $method = 'get' . $name;
-        return $this->$method($name);
+        foreach ($data as $key => $value) {
+            $this->__set($key, $value);
+        }
+        return $this;
     }
     
     /**
-     * 
-     * @param $name
-     * @param $value
+     * @return array
      */
-    public function __set($name, $value)
+    public function toArray()
     {
-        $method = 'set' . $name;
-        return $this->$method($name);
-    }
-    
-    /**
-     * 
-     * @param string $name
-     */
-    public function __isset($name)
-    {
-        $method = 'isset' . $name;
-        return $this->$method($name);
-    }
-    
-    /**
-     * 
-     * @param string $name
-     */
-    public function __unset($name)
-    {
-        $method = 'unset' . $name;
-        return $this->$method($name);
+        $data = array();
+        foreach ($this->_data as $key => $value) {
+            $data[$key] = $this->__get($key);
+        }
+        return $data;
     }
 }
