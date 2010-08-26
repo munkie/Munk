@@ -14,6 +14,29 @@ class Munk_MusicBrainz
     const TYPE_RELEASE = 'Release';
     const TYPE_TRACK = 'Track';
     const TYPE_LABEL = 'Label';
+    
+    /**
+     * 
+     * @var incs
+     */
+    const INC_ALIASES = 'aliases';
+    const INC_RELEASE_GROUPS = 'release-groups';
+    const INC_SA = 'sa-';
+    const INC_VA = 'va-';
+    const INC_ARTIST_RELS = 'artist-rels';
+    const INC_LABEL_RELS = 'label-rels';
+    const INC_RELEASE_RELS = 'release-rels';
+    const INC_TRACK_RELS = 'track-rels';
+    const INC_URL_RELS = 'url-rels';
+    const INC_TAGS = 'tags';
+    const INC_RATINGS = 'ratings';
+    const INC_USER_TAGS = 'user-tags';
+    const INC_USER_RATINGS = 'user-ratings';
+    const INC_COUNTS = 'counts';
+    const INC_RELEASE_EVENTS = 'release-events';
+    const INC_DISCS = 'discs';
+    const INC_LABELS = 'labels';
+ 
 
     /**
      * 
