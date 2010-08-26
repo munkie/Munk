@@ -26,6 +26,18 @@ abstract class Munk_MusicBrainz_ResultSet_Abstract implements Munk_MusicBrainz_R
     
     /**
      * 
+     * @var integer
+     */
+    protected $_count = 0;
+    
+    /**
+     * 
+     * @var integer
+     */
+    protected $_offset = 0;
+    
+    /**
+     * 
      * @param array $data
      */
     public function __construct(array $data = array())
@@ -158,12 +170,46 @@ abstract class Munk_MusicBrainz_ResultSet_Abstract implements Munk_MusicBrainz_R
     
     /**
      * 
+     * @param integer $count
+     */
+    public function setCount($count)
+    {
+        $this->_count = (int) $count;
+    }
+    
+    /**
+     * @return integer
+     */
+    public function getCount()
+    {
+        return $this->_count;
+    }
+    
+    /**
+     * 
+     * @param inetger $offset
+     */
+    public function setOffset($offset)
+    {
+        $this->_offset = (int) $offset;
+    }
+    
+    /**
+     * @return integer
+     */
+    public function getOffset()
+    {
+        return $this->_offset;
+    }
+    
+    /**
+     * 
      * @param string $type
      * @param mixed  $data
      * 
      * @return Munk_MusicBrainz_ResultSet_Abstract
      */
-    static public function factory($type, $data)
+    static public function factory($type, array $data = array())
     {
         $class = 'Munk_MusicBrainz_ResultSet_' . $type;
         if (!class_exists($class)) {
