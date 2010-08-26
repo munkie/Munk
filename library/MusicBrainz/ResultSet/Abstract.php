@@ -4,7 +4,7 @@
  * @author munkie
  *
  */
-abstract class Munk_MusicBrainz_ResultSet implements Munk_MusicBrainz_ResultSet_Interface
+abstract class Munk_MusicBrainz_ResultSet_Abstract implements Munk_MusicBrainz_ResultSet_Interface
 {
     /**
      * 
@@ -154,5 +154,21 @@ abstract class Munk_MusicBrainz_ResultSet implements Munk_MusicBrainz_ResultSet_
     public function valid()
     {
         return (array_key_exists($this->_position, $this->_data));
+    }
+    
+    /**
+     * 
+     * @param string $type
+     * @param mixed  $data
+     * 
+     * @return Munk_MusicBrainz_ResultSet_Abstract
+     */
+    static public function factory($type, $data)
+    {
+        $class = 'Munk_MusicBrainz_ResultSet_' . $type;
+        if (!class_exists($class)) {
+            throw new Munk_MusicBrainz_Exception("Invalid type: $type. Class $class does not exist");
+        }
+        return new $class($data);
     }
 }

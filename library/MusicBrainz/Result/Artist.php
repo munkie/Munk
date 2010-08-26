@@ -24,7 +24,7 @@ class Munk_MusicBrainz_Result_Artist extends Munk_MusicBrainz_Result
     protected $_data = array(
         'id'              => null,
         'name'            => null,
-        'gid'             => null,
+        'mbid'            => null,
         'modpending'      => null,
         'sortname'        => null,
         'page'            => null,
@@ -39,8 +39,8 @@ class Munk_MusicBrainz_Result_Artist extends Munk_MusicBrainz_Result
     /**
      * @return string
      */
-    public function getMbid()
+    public function getGid()
     {
-        return $this->gid;
+        return $this->mbid;
     }
 }
