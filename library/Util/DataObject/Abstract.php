@@ -83,7 +83,7 @@ abstract class Munk_Util_DataObject_Abstract
     public function __set($name, $value)
     {
         $method = 'set' . $name;
-        return $this->$method($name);
+        return $this->$method($value);
     }
     
     /**
