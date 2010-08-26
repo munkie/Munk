@@ -6,19 +6,6 @@
  */
 abstract class Munk_MusicBrainz_Adapter_Db_Abstract extends Munk_MusicBrainz_Adapter_Abstract
 {
-    /*
-     * Types
-     */
-    const TYPE_ARTIST = 'Artist';
-    const TYPE_ALIAS  = 'Alias';
-    
-    /*
-     * Artist types
-     */
-    const ARTIST_TYPE_UNKNOWN    = 0;
-    const ARTIST_TYPE_PERSON     = 1;
-    const ARTIST_TYPE_GROUP      = 2;
-    
     /**
      * 
      * @var Zend_Db_Adapter_Pdo_Pgsql

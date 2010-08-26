@@ -37,7 +37,13 @@ class Munk_MusicBrainz
     const INC_DISCS = 'discs';
     const INC_LABELS = 'labels';
  
-
+    /*
+     * Artist types
+     */
+    const ARTIST_TYPE_UNKNOWN    = 0;
+    const ARTIST_TYPE_PERSON     = 1;
+    const ARTIST_TYPE_GROUP      = 2;
+    
     /**
      * 
      * @param mixed $adapter
