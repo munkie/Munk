@@ -21,7 +21,7 @@ abstract class Munk_MusicBrainz_Inc_Abstract extends Munk_Util_DataObject_Abstra
                 $args[0] = true;
             }
         }
-        parent::__call($method, $args);
+        return parent::__call($method, $args);
     }
     
     /**
@@ -51,7 +51,7 @@ abstract class Munk_MusicBrainz_Inc_Abstract extends Munk_Util_DataObject_Abstra
      */
     public function __toString()
     {
-        return implode(' ', $this->toArray(true));
+        return implode(' ', array_keys($this->toArray(true)));
     }
     
     /**
@@ -63,7 +63,7 @@ abstract class Munk_MusicBrainz_Inc_Abstract extends Munk_Util_DataObject_Abstra
     {
         // convert indexed array to assoc array with true values
         if (!empty($data) && array_values($data) === $data) {
-            $values = array_fill(0, count($data) - 1, true);
+            $values = array_fill(0, count($data), true);
             $data = array_combine($data, $values);
         }
         return parent::populate($data);
