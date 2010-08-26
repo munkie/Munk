@@ -4,7 +4,7 @@
  * @author munkie
  *
  */
-abstract class Munk_MusicBrainz_Abstract
+abstract class Munk_MusicBrainz_Adapter_Db_Abstract extends Munk_MusicBrainz_Adapter_Abstract
 {
     /*
      * Types
