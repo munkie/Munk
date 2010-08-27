@@ -71,35 +71,39 @@ abstract class Munk_MusicBrainz_Adapter_Rest_Mapper_Abstract
     /**
      * @return Munk_MusicBrainz_Result_Abstract
      */
-    public function getResult($resultXPath = null)
+    public function getResult(SimpleXMLElement $item = null)
     {
-        $resultXPath = (null !== $resultXPath) ? $resultXPath : $this->_resultXPath;
-        $results = $this->_sxml->xpath($resultXPath);
-        if (is_array($results) && count($results) > 0) {
-            return $this->_getResult($results[0]);
+        if (null === $item) {
+            $items = $this->_sxml->xpath($this->_resultXPath);
+            if (is_array($items) && count($items) > 0) {
+                $item = $items[0];
+            }
+        }
+        if (null === $item) {
+            return $this->_getResult($item);
         }
     }
     
     /**
      * @return Munk_MusicBrainz_ResultSet_Abstract
      */
-    public function getResultSet($resultSetXPath = null)
+    public function getResultSet(array $items = null)
     {
-        $resultSetXPath = (null !== $resultSetXPath) ? $resultSetXPath : $this->_resultSetXPath;
-
         $resultSet = Munk_MusicBrainz_ResultSet_Abstract::factory($this->_type);
         
-        $items = $this->_sxml->xpath($resultSetXPath);
+        if (null === $items) {
+           $items = $this->_sxml->xpath($this->_resultSetXPath);
+        }
+
         if (is_array($items) && count($items) > 0) {
             foreach ($items as $position => $item) {
                 $resultSet->addResult($this->_getResult($item));
             }
-        }
-        
-        $root = $this->_sxml->xpath('/*/*[@count and @offset]');
-        if (isset($root[0]['count'], $root[0]['offset'])) {
-            $resultSet->setCount((string) $root[0]['count']);
-            $resultSet->setOffset((string) $root[0]['offset']);
+            $root = $item->xpath('parent::*[@count and @offset]');
+            if (isset($root[0]['count'], $root[0]['offset'])) {
+                $resultSet->setCount((string) $root[0]['count']);
+                $resultSet->setOffset((string) $root[0]['offset']);
+            }
         }
         
         return $resultSet;
