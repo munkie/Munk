@@ -22,7 +22,7 @@ class Munk_MusicBrainz_Adapter_Rest_Mapper_Release extends Munk_MusicBrainz_Adap
      * 
      * @var string
      */
-    protected $_resultSetXPath = '/metadata/release-list/artist';
+    protected $_resultSetXPath = '/metadata/release-list/release';
     
     /**
      * 
@@ -36,6 +36,7 @@ class Munk_MusicBrainz_Adapter_Rest_Mapper_Release extends Munk_MusicBrainz_Adap
         'asin'           => '/asin',
         'script'         => '/text-representation/@script',
         'language'       => '/text-representation/@language',
+        'artist'         => array('xpath' => '/artist', 'relResult' => Munk_MusicBrainz::TYPE_ARTIST),
     );
     
     /**

@@ -18,19 +18,7 @@ class Munk_MusicBrainz_Adapter_Rest_Mapper_Track extends Munk_MusicBrainz_Adapte
      * 
      * @var string
      */
-    protected $_resultSetXPath = '/metadata/track-list/track';
-    
-    /**
-     * 
-     * @var string
-     */
-    protected $_resultTag = 'track';
-    
-    /**
-     * 
-     * @var string
-     */
-    protected $_resultSetTag = 'track-list';    
+    protected $_resultSetXPath = '/metadata/track-list/track'; 
     
     /**
      * 

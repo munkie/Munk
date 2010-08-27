@@ -69,6 +69,22 @@ abstract class Munk_MusicBrainz_Adapter_Rest_Mapper_Abstract
     }
     
     /**
+     * @return string
+     */
+    public function getResultTag()
+    {
+        return $this->_resultTag;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getResultSetTag()
+    {
+        return $this->_resultSetTag;
+    }
+    
+    /**
      * @return Munk_MusicBrainz_Result_Abstract
      */
     public function getResult(SimpleXMLElement $item = null)
@@ -120,14 +136,18 @@ abstract class Munk_MusicBrainz_Adapter_Rest_Mapper_Abstract
                 $params = array('xpath' => $params);
             }
             $xpath = '.' . $params['xpath'];
-            $value = $sxml->xpath($xpath);
-            if (isset($value[0])) {
-                $value = $value[0];
+            $values = $sxml->xpath($xpath);
+            if (isset($values[0])) {
+                $value = $values[0];
                 // a workaround to parse attr cause xpath always return element not attr
-                if (preg_match('/\/@([a-zA-Z0-9\-]+)$/', $params['xpath'], $matches)) {
+                if (preg_match('/\/@([a-zA-Z0-9\-_]+)$/', $params['xpath'], $matches)) {
                     $value = $value[$matches[1]];
                 }
-                if (isset($params['callback'])) {
+                if (isset($params['relResult'])) {
+                    $value = $this->_getRelResult($params['relResult'], $value);
+                } else if (isset($params['relResultSet'])) {
+                    $value = $this->_getRelResultSet($params['relResultSet'], $values);
+                } else if (isset($params['callback'])) {
                     $value = call_user_func(array($this, $params['callback']), $value);
                 } else {
                     $type = (isset($params['type'])) ? $params['type'] : 'string';
@@ -137,5 +157,47 @@ abstract class Munk_MusicBrainz_Adapter_Rest_Mapper_Abstract
             }
         }
         return $result;
+    }
+    
+    /**
+     * 
+     * @param string $type
+     * @param SimpleXMLElement $item
+     * 
+     * @return Munk_MusicBrainz_Result_Abstract
+     */
+    protected function _getRelResult($type, SimpleXMLElement $item)
+    {
+        $mapper = self::factory($type);
+        return $mapper->getResult($item);
+    }
+    
+    /**
+     * 
+     * @param string $type
+     * @param array $items
+     * 
+     * @return Munk_MusicBrainz_ResultSet_Abstract
+     */
+    protected function _getRelResultSet($type, array $items)
+    {
+        $mapper = self::factory($type);
+        return $mapper->getResultSet($items);        
+    }
+    
+    /**
+     * 
+     * @param string $type
+     * @param SimpleXMLElement $sxml
+     * 
+     * @return Munk_MusicBrainz_Adapter_Rest_Mapper_Abstract
+     */
+    static public function factory($type, SimpleXMLElement $sxml = null)
+    {
+        $class = 'Munk_MusicBrainz_Adapter_Rest_Mapper_' . $type;
+        if (!class_exists($class)) {
+            throw new Munk_MusicBrainz_Adapter_Rest_Exception("Mapper not found. Class $class does not exist");
+        }
+        return new $class($sxml);
     }
 }
