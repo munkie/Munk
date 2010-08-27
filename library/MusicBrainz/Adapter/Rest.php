@@ -173,4 +173,32 @@ class Munk_MusicBrainz_Adapter_Rest extends Munk_MusicBrainz_Adapter_Abstract
         $mapper = new Munk_MusicBrainz_Adapter_Rest_Mapper_Artist($response);
         return $mapper->getResultSet();
     }
+    
+    /**
+     * 
+     * @param string $mbid
+     * @param Munk_MusicBrainz_Inc_Release $inc
+     * 
+     * @return Munk_MusicBrainz_Result_Release
+     */
+    protected function _getRelease($mbid, Munk_MusicBrainz_Inc_Release $inc)
+    {
+        $response = $this->_requestResource(Munk_MusicBrainz::TYPE_RELEASE, $mbid, $inc);
+        $mapper = new Munk_MusicBrainz_Adapter_Rest_Mapper_Release($response);
+        return $mapper->getResult();
+    }
+    
+    /**
+     * 
+     * @param Munk_MusicBrainz_Filter_Artist $filter
+     * @param Munk_MusicBrainz_Inc_Artist $inc
+     * 
+     * @return Munk_MusicBrainz_ResultSet_Artist
+     */
+    protected function _searchReleases(Munk_MusicBrainz_Filter_Release $filter)
+    {
+        $response = $this->_requestCollection(Munk_MusicBrainz::TYPE_RELEASE, $filter);
+        $mapper = new Munk_MusicBrainz_Adapter_Rest_Mapper_Release($response);
+        return $mapper->getResultSet();
+    }
 }

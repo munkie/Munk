@@ -36,5 +36,17 @@ class Munk_MusicBrainz_Adapter_Rest_Mapper_Artist extends Munk_MusicBrainz_Adapt
         'begindate'      => '/life-span/@begin',
         'enddate'        => '/life-span/@end',
         'disambiguation' => '/disambiguation',
+        'releases'       => array('xpath' => '/release-list', 'callback' => '_releaseList'),
     );
+    
+    /**
+     * 
+     * @param SimpleXMLElement $item
+     */
+    protected function _releaseList(SimpleXMLElement $item)
+    {
+        $mapper = new Munk_MusicBrainz_Adapter_Rest_Mapper_Release();
+        $releaseSet = $mapper->getResultSet($item->xpath('./release'));
+        return $releaseSet;
+    }
 }

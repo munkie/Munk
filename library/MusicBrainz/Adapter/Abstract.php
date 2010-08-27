@@ -103,4 +103,52 @@ abstract class Munk_MusicBrainz_Adapter_Abstract implements Munk_MusicBrainz_Ada
      * @return Munk_MusicBrainz_ResultSet_Artist
      */
     abstract protected function _searchArtists(Munk_MusicBrainz_Filter_Artist $filter);
+    
+    /**
+     * 
+     * @param string $mbid
+     * @param mixed  $inc
+     * 
+     * @return Munk_MusicBrainz_Result_Artist
+     */
+    public function getRelease($mbid, $inc = null)
+    {
+        $inc = $this->_makeInc(Munk_MusicBrainz::TYPE_RELEASE, $inc);
+        return $this->_getRelease($mbid, $inc);
+    }
+    
+    /**
+     * 
+     * @param string $mbid
+     * @param Munk_MusicBrainz_Inc_Artist $inc
+     * 
+     * @return Munk_MusicBrainz_Result_Artist
+     */
+    abstract protected function _getRelease($mbid, Munk_MusicBrainz_Inc_Release $inc);
+    
+    /**
+     * 
+     * @param mixed   $filter
+     * @param mixed   $inc
+     * @param integer $limit
+     * @param integer $offset
+     * 
+     * @return Munk_MusicBrainz_ResultSet_Artist
+     */
+    public function searchReleases($filter = null, $limit = null, $offset = null)
+    {
+        if (is_string($filter)) {
+            $filter = array('title' => $filter);
+        }
+        $filter = $this->_makeFilter(Munk_MusicBrainz::TYPE_RELEASE, $filter, $limit, $offset);
+        return $this->_searchReleases($filter);
+    }
+    
+    /**
+     * 
+     * @param Munk_MusicBrainz_Filter_Artist $filter
+     * 
+     * @return Munk_MusicBrainz_ResultSet_Artist
+     */
+    abstract protected function _searchReleases(Munk_MusicBrainz_Filter_Release $filter);
 }

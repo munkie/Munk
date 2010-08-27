@@ -79,7 +79,7 @@ abstract class Munk_MusicBrainz_Adapter_Rest_Mapper_Abstract
                 $item = $items[0];
             }
         }
-        if (null === $item) {
+        if (null !== $item) {
             return $this->_getResult($item);
         }
     }
