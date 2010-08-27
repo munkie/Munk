@@ -37,9 +37,12 @@ class Munk_MusicBrainz
     const INC_DISCS = 'discs';
     const INC_LABELS = 'labels';
     const INC_ARTIST = 'artist';
+    const INC_RELEASE = 'release';
     const INC_TRACKS = 'tracks';
     const INC_TRACK_LEVEL_RELS = 'track-level-rels';
     const INC_ISRCS = 'isrcs';
+    const INC_PUIDS = 'puids';
+    
  
     /*
      * Artist types
