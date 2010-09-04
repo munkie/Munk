@@ -7,7 +7,7 @@
 class Munk_MusicBrainz
 {
     /*
-     * Entity types
+     * Resource types
      */
     const TYPE_ARTIST        = 'Artist';
     const TYPE_RELEASE_GROUP = 'ReleaseGroup';
@@ -15,6 +15,9 @@ class Munk_MusicBrainz
     const TYPE_TRACK         = 'Track';
     const TYPE_LABEL         = 'Label';
     
+    /*
+     * Secondary resource types
+     */
     const TYPE_ALIAS         = 'Alias';
     const TYPE_TAG           = 'Tag';
     const TYPE_RATING        = 'Rating';

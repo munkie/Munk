@@ -41,5 +41,6 @@ class Munk_MusicBrainz_Adapter_Rest_Mapper_Artist extends Munk_MusicBrainz_Adapt
         'aliases'        => array('xpath' => '/alias-list/alias', 'relResultSet' => Munk_MusicBrainz::TYPE_ALIAS),
         'tags'           => array('xpath' => '/tag-list/tag', 'relResultSet' => Munk_MusicBrainz::TYPE_TAG),
         'rating'         => array('xpath' => '/rating', 'relResult' => Munk_MusicBrainz::TYPE_RATING),
+        'releaseGroups'  => array('xpath' => '/release-group-list/release-group', 'relResultSet' => Munk_MusicBrainz::TYPE_RELEASE_GROUP),
     );
 }
