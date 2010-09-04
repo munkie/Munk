@@ -30,14 +30,14 @@ interface Munk_MusicBrainz_Adapter_Interface
      * 
      * @return Munk_MusicBrainz_Result_ReleaseGroup
      */
-    //public function getReleaseGroup($mbid, Munk_MusicBrainz_Inc_ReleaseGroup $inc);
+    public function getReleaseGroup($mbid, Munk_MusicBrainz_Inc_ReleaseGroup $inc);
 
     /**
      * 
      * @param Munk_MusicBrainz_Filter_ReleaseGroup $filter
      * @return Munk_MusicBrainz_ResultSet_ReleaseGroup
      */
-    //public function searchReleaseGroups(Munk_MusicBrainz_Filter_ReleaseGroup $filter);
+    public function searchReleaseGroups(Munk_MusicBrainz_Filter_ReleaseGroup $filter);
     
     /**
      * 

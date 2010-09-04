@@ -4,7 +4,7 @@
  * @author munkie
  *
  */
-class Munk_MusicBrainz_Filter_Release extends Munk_MusicBrainz_Filter_Abstract
+class Munk_MusicBrainz_Filter_Release extends Munk_MusicBrainz_Filter_ReleaseGroup
 {
     /**
      * 
@@ -15,7 +15,7 @@ class Munk_MusicBrainz_Filter_Release extends Munk_MusicBrainz_Filter_Abstract
         'discid' => null, 
         'artist' => null,
         'artistid' => null,
-        'releasetypes' => null,
+        'releasetypes' => array(),
         'count' => null,
         'date' => null,
         'asin' => null,

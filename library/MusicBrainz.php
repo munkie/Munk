@@ -28,8 +28,6 @@ class Munk_MusicBrainz
      */
     const INC_ALIASES           = 'aliases';
     const INC_RELEASE_GROUPS    = 'release-groups';
-    const INC_SA                = 'sa';
-    const INC_VA                = 'va';
     const INC_ARTIST_RELS       = 'artist-rels';
     const INC_LABEL_RELS        = 'label-rels';
     const INC_RELEASE_RELS      = 'release-rels';
@@ -45,11 +43,11 @@ class Munk_MusicBrainz
     const INC_LABELS            = 'labels';
     const INC_ARTIST            = 'artist';
     const INC_RELEASE           = 'release';
+    const INC_RELEASES          = 'releases';
     const INC_TRACKS            = 'tracks';
     const INC_TRACK_LEVEL_RELS  = 'track-level-rels';
     const INC_ISRCS             = 'isrcs';
     const INC_PUIDS             = 'puids';
-    
  
     /*
      * Artist types
