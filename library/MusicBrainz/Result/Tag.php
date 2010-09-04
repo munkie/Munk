@@ -2,7 +2,9 @@
 /**
  * 
  * @author munkie
- *
+ * 
+ * @property string  $name
+ * @property integer $count 
  */
 class Munk_MusicBrainz_Result_Tag extends Munk_MusicBrainz_Result_Abstract
 {

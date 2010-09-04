@@ -15,7 +15,10 @@
  * @property string $disambiguation
  * 
  * @property Munk_MusicBrainz_ResultSet_Release $releases
- * 
+ * @property Munk_MusicBrainz_ResultSet_Alias   $aliases
+ * @property Munk_MusicBrainz_ResultSet_Tag     $tags
+ * @property Munk_MusicBrainz_Result_Rating     $rating
+ * @property Munk_MusicBrainz_ResultSet_ReleaseGroup     $releaseGroups 
  */
 class Munk_MusicBrainz_Result_Artist extends Munk_MusicBrainz_Result_Abstract
 {
