@@ -36,6 +36,10 @@ class Munk_MusicBrainz_Result_Artist extends Munk_MusicBrainz_Result_Abstract
         'tags'            => null,
         'rating'          => null,
         'releasegroups'   => null,
+        'relationartists' => null,
+        'relationrelease' => null,
+        'relationtrack'   => null,
+        'relationurls'    => null,
     );
     
     /**

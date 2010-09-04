@@ -21,6 +21,7 @@ class Munk_MusicBrainz
     const TYPE_ALIAS         = 'Alias';
     const TYPE_TAG           = 'Tag';
     const TYPE_RATING        = 'Rating';
+    const TYPE_RELATION      = 'Relation';
     
     /**
      * 
