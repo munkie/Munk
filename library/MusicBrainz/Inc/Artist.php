@@ -6,6 +6,12 @@
  */
 class Munk_MusicBrainz_Inc_Artist extends Munk_MusicBrainz_Inc_Abstract
 {
+    /*
+     * 
+     */
+    const SA = 'sa';
+    const VA = 'va';
+    
     /**
      * 
      * @var array
@@ -20,12 +26,21 @@ class Munk_MusicBrainz_Inc_Artist extends Munk_MusicBrainz_Inc_Abstract
         Munk_MusicBrainz::INC_URL_RELS        => null,
         Munk_MusicBrainz::INC_TAGS            => null,
         Munk_MusicBrainz::INC_RATINGS         => null,
-        Munk_MusicBrainz::INC_USER_TAGS       => null,
-        Munk_MusicBrainz::INC_USER_RATINGS    => null,
+        //Munk_MusicBrainz::INC_USER_TAGS       => null,
+        //Munk_MusicBrainz::INC_USER_RATINGS    => null,
         Munk_MusicBrainz::INC_COUNTS          => null,
         Munk_MusicBrainz::INC_RELEASE_EVENTS  => null,
         Munk_MusicBrainz::INC_DISCS           => null,
-        Munk_MusicBrainz::INC_LABELS          => null,
+        //Munk_MusicBrainz::INC_LABELS          => null,
+    );
+    
+    /**
+     * 
+     * @var array
+     */
+    protected $_releases = array(
+        self::SA => array(),
+        self::VA => array(),
     );
     
     /**
@@ -39,45 +54,110 @@ class Munk_MusicBrainz_Inc_Artist extends Munk_MusicBrainz_Inc_Abstract
      */
     public function __call($method, $args)
     {
-        if (preg_match('/^(get|set|isset|unset)(sa|va)-?(.*)$/i', $method, $matches)) {
+        if (preg_match('/^(get|set|isset|unset)(sa|va)-?(.+)$/i', $method, $matches)) {
             $operation = strtolower($matches[1]);
-            $type      = strtolower($matches[2]);
-            $value     = $matches[3];
-            if ('' == $value) {
-                if (!isset($args[0])) {
-                    throw new Munk_MusicBrainz_Inc_Exception("No value found for $type property");
-                }
-                $value = $args[0];
-            }
-            if (!is_array($value)) {
-                // TODO check $value is valid release type
-                $key = $type . '-' . $value;
-            } else if ('set' != $operation) {
-                throw new Munk_MusicBrainz_Inc_Exception("$type value must be string not array");
-            }
+            $key       = strtolower($matches[2]);
+            $type      = $matches[3];
             switch ($operation) {
                 case 'get':
-                    if (isset($this->_data[$key])) {
-                        return true;
-                    } else {
-                        return null;
-                    }
-                    return $this;
+                    return $this->_getRelease($key, $type);
                 case 'set':
-                    foreach ((array) $value as $v) {
-                        $key = $type . '-' . $v;
-                        $this->_data[$key] = true;
-                    }
-                    return $this;
+                    $value = isset($args[0]) ? $args[0] : true;
+                    return $this->_setRelease($key, $type, $value);
                 case 'isset':
-                    return isset($this->_data[$key]);
+                    return parent::__call('isset' . $key, array($type));
                 case 'unset':
-                    if (array_key_exists($key, $this->_data)) {
-                        unset($this->_data[$key]);
-                    }
-                    return $this;
+                    return parent::__call('unset' . $key, array($type));
             }
         }
         return parent::__call($method, $args);
+    }
+    
+    /**
+     * 
+     * @param string $type
+     * @param string $value
+     * 
+     * @return true|null
+     */
+    protected function _getRelease($key, $type)
+    {
+        if (isset($this->_releases[$key][$type])) {
+            return true;
+        } else {
+            return null;
+        }
+    }
+    
+    /**
+     * 
+     * @param string $key
+     * @param array|string $type
+     * @param mixed $value
+     */
+    protected function _setRelease($key, $type, $value)
+    {
+        $value = (true === $value) ? $value : null;
+        foreach ((array) $type as $t) {
+            $this->_releases[$key][$t] = $value;
+        }
+        return $this;
+    }
+    
+    /**
+     * 
+     * @param string $type
+     */
+    public function getSa($type)
+    {
+        return $this->_getRelease(self::SA, $type);
+    }
+    
+    /**
+     * 
+     * @param string $type
+     */
+    public function getVa($type)
+    {
+        return $this->_getRelease(self::VA, $type);
+    }
+    
+    /**
+     * 
+     * @param  array|string $value
+     * @return Munk_MusicBrainz_Inc_Artist
+     */
+    public function setSa($type, $value = true)
+    {
+        return $this->_setRelease(self::SA, $type, $value);
+    }
+    
+    /**
+     * 
+     * @param  array|string $value
+     * @return Munk_MusicBrainz_Inc_Artist
+     */
+    public function setVa($type, $value = true)
+    {
+        return $this->_setRelease(self::VA, $type, $value);
+    }
+    
+    /**
+     * 
+     * @param boolean $filterEmptyValues
+     * 
+     * @return array
+     */
+    public function toArray($filterEmptyValues = false)
+    {
+        $data = parent::toArray($filterEmptyValues);
+        foreach ($this->_releases as $key => $types) {
+            foreach ($types as $type => $value) {
+                if (true === $value) {
+                    $data[$key . '-' . $type] = true;
+                }
+            }
+        }
+        return $data;
     }
 }
