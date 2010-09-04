@@ -78,6 +78,26 @@ abstract class Munk_MusicBrainz_Inc_Abstract extends Munk_Util_DataObject_Abstra
     
     /**
      * 
+     * @param boolean $flag
+     */
+    public function setAll($flag = true)
+    {
+        $flag = (boolean) $flag;
+        foreach ($this->_data as $key => $value) {
+            $data[$key] = $this->__set($key, $flag);
+        }
+    }
+    
+    /**
+     *  
+     */
+    public function unsetAll()
+    {
+        $this->setAll(false);
+    }
+    
+    /**
+     * 
      * @param string $type
      * @param array $data
      * 
