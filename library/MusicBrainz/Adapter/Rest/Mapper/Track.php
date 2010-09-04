@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * 
+ * @author munkie
+ *
+ */
 class Munk_MusicBrainz_Adapter_Rest_Mapper_Track extends Munk_MusicBrainz_Adapter_Rest_Mapper_Abstract
 {
     /**

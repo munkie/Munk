@@ -4,7 +4,7 @@
  * @author munkie
  *
  */
-class Munk_MusicBrainz_Adapter_Rest extends Munk_MusicBrainz_Adapter_Abstract
+class Munk_MusicBrainz_Adapter_Rest implements Munk_MusicBrainz_Adapter_Interface
 {
     /**
      * 
@@ -153,7 +153,7 @@ class Munk_MusicBrainz_Adapter_Rest extends Munk_MusicBrainz_Adapter_Abstract
      * 
      * @return Munk_MusicBrainz_Result_Artist
      */
-    protected function _getArtist($mbid, Munk_MusicBrainz_Inc_Artist $inc)
+    public function getArtist($mbid, Munk_MusicBrainz_Inc_Artist $inc)
     {
         $response = $this->_requestResource(Munk_MusicBrainz::TYPE_ARTIST, $mbid, $inc);
         $mapper = new Munk_MusicBrainz_Adapter_Rest_Mapper_Artist($response);
@@ -167,7 +167,7 @@ class Munk_MusicBrainz_Adapter_Rest extends Munk_MusicBrainz_Adapter_Abstract
      * 
      * @return Munk_MusicBrainz_ResultSet_Artist
      */
-    protected function _searchArtists(Munk_MusicBrainz_Filter_Artist $filter)
+    public function searchArtists(Munk_MusicBrainz_Filter_Artist $filter)
     {
         $response = $this->_requestCollection(Munk_MusicBrainz::TYPE_ARTIST, $filter);
         $mapper = new Munk_MusicBrainz_Adapter_Rest_Mapper_Artist($response);
@@ -181,7 +181,7 @@ class Munk_MusicBrainz_Adapter_Rest extends Munk_MusicBrainz_Adapter_Abstract
      * 
      * @return Munk_MusicBrainz_Result_Release
      */
-    protected function _getRelease($mbid, Munk_MusicBrainz_Inc_Release $inc)
+    public function getRelease($mbid, Munk_MusicBrainz_Inc_Release $inc)
     {
         $response = $this->_requestResource(Munk_MusicBrainz::TYPE_RELEASE, $mbid, $inc);
         $mapper = new Munk_MusicBrainz_Adapter_Rest_Mapper_Release($response);
@@ -195,7 +195,7 @@ class Munk_MusicBrainz_Adapter_Rest extends Munk_MusicBrainz_Adapter_Abstract
      * 
      * @return Munk_MusicBrainz_ResultSet_Artist
      */
-    protected function _searchReleases(Munk_MusicBrainz_Filter_Release $filter)
+    public function searchReleases(Munk_MusicBrainz_Filter_Release $filter)
     {
         $response = $this->_requestCollection(Munk_MusicBrainz::TYPE_RELEASE, $filter);
         $mapper = new Munk_MusicBrainz_Adapter_Rest_Mapper_Release($response);
@@ -209,7 +209,7 @@ class Munk_MusicBrainz_Adapter_Rest extends Munk_MusicBrainz_Adapter_Abstract
      * 
      * @return Munk_MusicBrainz_Result_Track
      */
-    protected function _getTrack($mbid, Munk_MusicBrainz_Inc_Track $inc)
+    public function getTrack($mbid, Munk_MusicBrainz_Inc_Track $inc)
     {
         $response = $this->_requestResource(Munk_MusicBrainz::TYPE_TRACK, $mbid, $inc);
         $mapper = new Munk_MusicBrainz_Adapter_Rest_Mapper_Track($response);
@@ -223,7 +223,7 @@ class Munk_MusicBrainz_Adapter_Rest extends Munk_MusicBrainz_Adapter_Abstract
      * 
      * @return Munk_MusicBrainz_ResultSet_Artist
      */
-    protected function _searchTracks(Munk_MusicBrainz_Filter_Track $filter)
+    public function searchTracks(Munk_MusicBrainz_Filter_Track $filter)
     {
         $response = $this->_requestCollection(Munk_MusicBrainz::TYPE_TRACK, $filter);
         $mapper = new Munk_MusicBrainz_Adapter_Rest_Mapper_Track($response);
