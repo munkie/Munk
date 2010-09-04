@@ -96,7 +96,7 @@ abstract class Munk_MusicBrainz_Adapter_Rest_Mapper_Abstract
         }
 
         if (is_array($items) && count($items) > 0) {
-            foreach ($items as $position => $item) {
+            foreach ($items as $item) {
                 $resultSet->addResult($this->_getResult($item));
             }
             $root = $item->xpath('parent::*[@count and @offset]');
