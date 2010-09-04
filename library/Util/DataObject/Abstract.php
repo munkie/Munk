@@ -27,9 +27,18 @@ abstract class Munk_Util_DataObject_Abstract
      */
     public function __construct(array $data = null)
     {
+        $this->init();
+        
         if (null !== $data) {
             $this->populate($data);
         }
+    }
+    
+    /**
+     * 
+     */
+    public function init()
+    {
     }
 
     /**
