@@ -33,10 +33,16 @@ abstract class Munk_MusicBrainz_Inc_Abstract extends Munk_Util_DataObject_Abstra
     /**
      * 
      * @param string $name
+     * 
+     * @return Munk_MusicBrainz_Inc_Abstract
      */
     public function set($name)
     {
-        return $this->__set($name, true);
+        $names = (array) $name;
+        foreach ($names as $n) {
+            $this->__set($name, true);
+        }
+        return $this;
     }
     
     /**
