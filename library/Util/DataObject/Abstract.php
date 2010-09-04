@@ -34,7 +34,7 @@ abstract class Munk_Util_DataObject_Abstract
 
     /**
      * 
-     * @param string $name
+     * @param string $method
      * @param array  $args
      * 
      * @return mixed
@@ -66,44 +66,44 @@ abstract class Munk_Util_DataObject_Abstract
 
     /**
      * 
-     * @param string $name
+     * @param string $parameter
      * @return mixed
      */
-    public function __get($name)
+    public function __get($parameter)
     {
-        $method = 'get' . $name;
+        $method = 'get' . $parameter;
         return $this->$method();
     }
 
     /**
      * 
-     * @param $name
+     * @param $parameter
      * @param $value
      */
-    public function __set($name, $value)
+    public function __set($parameter, $value)
     {
-        $method = 'set' . $name;
+        $method = 'set' . $parameter;
         return $this->$method($value);
     }
 
     /**
      * 
-     * @param string $name
+     * @param string $parameter
      */
-    public function __isset($name)
+    public function __isset($parameter)
     {
-        $method = 'isset' . $name;
-        return $this->$method($name);
+        $method = 'isset' . $parameter;
+        return $this->$method($parameter);
     }
 
     /**
      * 
-     * @param string $name
+     * @param string $parameter
      */
-    public function __unset($name)
+    public function __unset($parameter)
     {
-        $method = 'unset' . $name;
-        return $this->$method($name);
+        $method = 'unset' . $parameter;
+        return $this->$method($parameter);
     }
 
     /**
