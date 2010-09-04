@@ -294,6 +294,37 @@ class Munk_MusicBrainz
     
     /**
      * 
+     * @param string $mbid
+     * @param mixed  $inc
+     * 
+     * @return Munk_MusicBrainz_Result_Label
+     */
+    public function getLabel($mbid, $inc = null)
+    {
+        $inc = $this->_makeInc(Munk_MusicBrainz::TYPE_LABEL, $inc);
+        return $this->getAdapter()->getLabel($mbid, $inc);
+    }
+    
+    /**
+     * 
+     * @param mixed   $filter
+     * @param mixed   $inc
+     * @param integer $limit
+     * @param integer $offset
+     * 
+     * @return Munk_MusicBrainz_ResultSet_Label
+     */
+    public function searchLabels($filter = null, $limit = null, $offset = null)
+    {
+        if (is_string($filter)) {
+            $filter = array('title' => $filter);
+        }
+        $filter = $this->_makeFilter(Munk_MusicBrainz::TYPE_LABEL, $filter, $limit, $offset);
+        return $this->getAdapter()->searchLabels($filter);
+    }
+    
+    /**
+     * 
      * @param mixed $adapter
      * @param mixed $config
      * 

@@ -80,7 +80,7 @@ interface Munk_MusicBrainz_Adapter_Interface
      * 
      * @return Munk_MusicBrainz_Result_Label
      */
-    //public function getLabel($mbid, Munk_MusicBrainz_Inc_Label $inc);
+    public function getLabel($mbid, Munk_MusicBrainz_Inc_Label $inc);
 
     /**
      * 
@@ -88,5 +88,5 @@ interface Munk_MusicBrainz_Adapter_Interface
      * 
      * @return Munk_MusicBrainz_ResultSet_Label
      */
-    //public function searchLabels(Munk_MusicBrainz_Filter_Label $filter);
+    public function searchLabels(Munk_MusicBrainz_Filter_Label $filter);
 }

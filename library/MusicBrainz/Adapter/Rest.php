@@ -240,5 +240,29 @@ class Munk_MusicBrainz_Adapter_Rest implements Munk_MusicBrainz_Adapter_Interfac
     public function searchTracks(Munk_MusicBrainz_Filter_Track $filter)
     {
         return $this->_requestResultSet(Munk_MusicBrainz::TYPE_TRACK, $filter);
-    }    
+    }
+    
+    /**
+     * 
+     * @param string $mbid
+     * @param Munk_MusicBrainz_Inc_Label $inc
+     * 
+     * @return Munk_MusicBrainz_Result_Label
+     */
+    public function getLabel($mbid, Munk_MusicBrainz_Inc_Label $inc)
+    {
+        return $this->_requestResult(Munk_MusicBrainz::TYPE_LABEL, $mbid, $inc);
+    }
+    
+    /**
+     * 
+     * @param Munk_MusicBrainz_Filter_Label $filter
+     * @param Munk_MusicBrainz_Inc_Track $inc
+     * 
+     * @return Munk_MusicBrainz_ResultSet_Label
+     */
+    public function searchLabels(Munk_MusicBrainz_Filter_Label $filter)
+    {
+        return $this->_requestResultSet(Munk_MusicBrainz::TYPE_LABEL, $filter);
+    }  
 }
