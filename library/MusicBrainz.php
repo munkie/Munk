@@ -204,7 +204,38 @@ class Munk_MusicBrainz
      * @param string $mbid
      * @param mixed  $inc
      * 
-     * @return Munk_MusicBrainz_Result_Artist
+     * @return Munk_MusicBrainz_Result_ReleaseGroup
+     */
+    public function getReleaseGroup($mbid, $inc = null)
+    {
+        $inc = $this->_makeInc(Munk_MusicBrainz::TYPE_RELEASE_GROUP, $inc);
+        return $this->getAdapter()->getReleaseGroup($mbid, $inc);
+    }
+    
+    /**
+     * 
+     * @param mixed   $filter
+     * @param mixed   $inc
+     * @param integer $limit
+     * @param integer $offset
+     * 
+     * @return Munk_MusicBrainz_ResultSet_ReleaseGroup
+     */
+    public function searchReleaseGroups($filter = null, $limit = null, $offset = null)
+    {
+        if (is_string($filter)) {
+            $filter = array('title' => $filter);
+        }
+        $filter = $this->_makeFilter(Munk_MusicBrainz::TYPE_RELEASE_GROUP, $filter, $limit, $offset);
+        return $this->getAdapter()->searchReleaseGroups($filter);
+    }
+    
+    /**
+     * 
+     * @param string $mbid
+     * @param mixed  $inc
+     * 
+     * @return Munk_MusicBrainz_Result_Release
      */
     public function getRelease($mbid, $inc = null)
     {
@@ -219,7 +250,7 @@ class Munk_MusicBrainz
      * @param integer $limit
      * @param integer $offset
      * 
-     * @return Munk_MusicBrainz_ResultSet_Artist
+     * @return Munk_MusicBrainz_ResultSet_Release
      */
     public function searchReleases($filter = null, $limit = null, $offset = null)
     {
