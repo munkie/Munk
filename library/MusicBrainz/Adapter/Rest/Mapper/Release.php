@@ -36,7 +36,11 @@ class Munk_MusicBrainz_Adapter_Rest_Mapper_Release extends Munk_MusicBrainz_Adap
         'asin'           => '/asin',
         'script'         => '/text-representation/@script',
         'language'       => '/text-representation/@language',
+        // incs
         'artist'         => array('xpath' => '/artist', 'relResult' => Munk_MusicBrainz::TYPE_ARTIST),
+        'tracks'         => array('xpath' => '/track-list/track', 'relResultSet' => Munk_MusicBrainz::TYPE_TRACK),
+        'tags'           => array('xpath' => '/tag-list/tag', 'relResultSet' => Munk_MusicBrainz::TYPE_TAG),
+        'rating'         => array('xpath' => '/rating', 'relResult' => Munk_MusicBrainz::TYPE_RATING),
     );
     
     /**

@@ -18,4 +18,25 @@ class Munk_MusicBrainz_Result_Track extends Munk_MusicBrainz_Result_Abstract
         'title' => null,
         'duration' => null,
     );
+    
+    public function getHours()
+    {
+        return (int) $this->duration / 3600000;
+    }
+    
+    /**
+     * @return integer
+     */
+    public function getMinutes()
+    {
+        return (int) ($this->duration % 3600000) / 60000;
+    }
+    
+    /**
+     * @return integer
+     */
+    public function getSeconds()
+    {
+        return (int) ($this->duration % 60000) / 1000;
+    }
 }
