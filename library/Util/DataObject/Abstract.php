@@ -14,13 +14,13 @@ abstract class Munk_Util_DataObject_Abstract
      * @var array 
      */
     protected $_data = array();
-    
+
     /**
      * 
      * @var string
      */
     protected $_exceptionClass = 'Munk_Util_DataObject_Exception';
-    
+
     /**
      * 
      * @param array $data
@@ -31,7 +31,7 @@ abstract class Munk_Util_DataObject_Abstract
             $this->populate($data);
         }
     }
-    
+
     /**
      * 
      * @param string $name
@@ -45,7 +45,7 @@ abstract class Munk_Util_DataObject_Abstract
         if (preg_match('/^(get|set|isset|unset)(.+)$/i', $method, $matches)) {
             $operation = strtolower($matches[1]);
             $parameter = strtolower($matches[2]);
-        
+
             switch ($operation) {
                 case 'get':
                     return $this->_get($parameter);
@@ -60,10 +60,10 @@ abstract class Munk_Util_DataObject_Abstract
                     return $this->_unset($parameter);
             }
         }
-        
+
         return $this->_fault("Invalid method $method invocation");
     }
-    
+
     /**
      * 
      * @param string $name
@@ -74,7 +74,7 @@ abstract class Munk_Util_DataObject_Abstract
         $method = 'get' . $name;
         return $this->$method();
     }
-    
+
     /**
      * 
      * @param $name
@@ -85,7 +85,7 @@ abstract class Munk_Util_DataObject_Abstract
         $method = 'set' . $name;
         return $this->$method($value);
     }
-    
+
     /**
      * 
      * @param string $name
@@ -95,7 +95,7 @@ abstract class Munk_Util_DataObject_Abstract
         $method = 'isset' . $name;
         return $this->$method($name);
     }
-    
+
     /**
      * 
      * @param string $name
@@ -105,7 +105,7 @@ abstract class Munk_Util_DataObject_Abstract
         $method = 'unset' . $name;
         return $this->$method($name);
     }
-    
+
     /**
      * @throws Munk_Util_DataObject_Exception
      */
@@ -113,7 +113,7 @@ abstract class Munk_Util_DataObject_Abstract
     {
         throw new $this->_exceptionClass($message, $code);
     }
-    
+
     /**
      * 
      * @param string $parameter
@@ -124,10 +124,10 @@ abstract class Munk_Util_DataObject_Abstract
         if (array_key_exists($parameter, $this->_data)) {
             return $this->_data[$parameter];
         }
-        
+
         return $this->_fault("Parameter $parameter does not exist");
     }
-    
+
     /**
      * 
      * @param string $parameter
@@ -141,10 +141,10 @@ abstract class Munk_Util_DataObject_Abstract
             $this->_data[$parameter] = $value;
             return $this;
         }
-        
+
         return $this->_fault("Parameter $parameter does not exist");
     }
-    
+
     /**
      * 
      * @param string $parameter
@@ -156,10 +156,17 @@ abstract class Munk_Util_DataObject_Abstract
         if (array_key_exists($parameter, $this->_data)) {
             return isset($this->_data[$parameter]);
         }
-        
+
+        // if param is impemented using set|get method then get value and check if it is null
+        $method = 'get' . $parameter;
+        if (method_exists($this, $method)) {
+            $value = $this->$method($parameter);
+            return (null === $value);
+        }
+
         return $this->_fault("Parameter $parameter does not exist");
     }
-    
+
     /**
      * 
      * @param string $parameter
@@ -171,10 +178,16 @@ abstract class Munk_Util_DataObject_Abstract
         if (array_key_exists($parameter, $this->_data)) {
             return $this->_data[$parameter] = null;
         }
-        
+
+        // if param is impemented using set|get method then set null value
+        $method = 'set' . $parameter;
+        if (method_exists($this, $method)) {
+            return $this->$method(null);
+        }
+
         return $this->_fault("Parameter $parameter does not exist");
     }
-    
+
     /**
      * 
      * @param  array $data
@@ -187,7 +200,7 @@ abstract class Munk_Util_DataObject_Abstract
         }
         return $this;
     }
-    
+
     /**
      * @return array
      */
