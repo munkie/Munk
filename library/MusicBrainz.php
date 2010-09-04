@@ -16,6 +16,7 @@ class Munk_MusicBrainz
     const TYPE_LABEL         = 'Label';
     
     const TYPE_ALIAS         = 'Alias';
+    const TYPE_TAG           = 'Tag';
     
     /**
      * 
