@@ -13,6 +13,16 @@ abstract class Munk_MusicBrainz_Inc_Abstract extends Munk_Util_DataObject_Abstra
     protected $_exceptionClass = 'Munk_MusicBrainz_Inc_Exception';
     
     /**
+     * Inc types that needs authorization
+     * 
+     * @var array
+     */
+    protected $_needsAuth = array(
+        Munk_MusicBrainz::INC_USER_RATINGS,
+        Munk_MusicBrainz::INC_USER_TAGS,
+    );
+    
+    /**
      * 
      * @param string $method
      * @param array  $args
@@ -91,15 +101,29 @@ abstract class Munk_MusicBrainz_Inc_Abstract extends Munk_Util_DataObject_Abstra
         return parent::populate($data);
     }
     
+    
+    /**
+     * 
+     * @param string $key
+     * @return boolean
+     */
+    protected function _needsAuth($key)
+    {
+        return in_array($key, $this->_needsAuth);
+    }
+    
     /**
      * 
      * @param boolean $flag
      */
-    public function setAll($flag = true)
+    public function setAll($flag = true, $excludeAuth = true)
     {
         $flag = (boolean) $flag;
         foreach ($this->_data as $key => $value) {
-            $data[$key] = $this->__set($key, $flag);
+            if (true === $flag && $excludeAuth && $this->_needsAuth($key)) {
+                continue;
+            }
+            $this->__set($key, $flag);
         }
     }
     

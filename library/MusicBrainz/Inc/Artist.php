@@ -12,26 +12,45 @@ class Munk_MusicBrainz_Inc_Artist extends Munk_MusicBrainz_Inc_Abstract
     const SA = 'sa';
     const VA = 'va';
     
+    /*
+     * 
+     */
+    const ALIASES        = Munk_MusicBrainz::INC_ALIASES;
+    const RELEASE_GROUPS = Munk_MusicBrainz::INC_RELEASE_GROUPS;
+    const ARTIST_RELS    = Munk_MusicBrainz::INC_ARTIST_RELS;
+    const LABEL_RELS     = Munk_MusicBrainz::INC_LABEL_RELS;
+    const RELEASE_RELS   = Munk_MusicBrainz::INC_RELEASE_RELS;
+    const TRACK_RELS     = Munk_MusicBrainz::INC_TRACK_RELS;
+    const URL_RELS       = Munk_MusicBrainz::INC_URL_RELS;
+    const TAGS           = Munk_MusicBrainz::INC_TAGS;
+    const RATINGS        = Munk_MusicBrainz::INC_RATINGS;
+    const USER_TAGS      = Munk_MusicBrainz::INC_USER_TAGS;
+    const USER_RATINGS   = Munk_MusicBrainz::INC_USER_RATINGS;
+    const COUNTS         = Munk_MusicBrainz::INC_COUNTS;
+    const RELEASE_EVENTS = Munk_MusicBrainz::INC_RELEASE_EVENTS;
+    const DISCS          = Munk_MusicBrainz::INC_DISCS;
+    const LABELS         = Munk_MusicBrainz::INC_LABELS;
+    
     /**
      * 
      * @var array
      */
     protected $_data = array(
-        Munk_MusicBrainz::INC_ALIASES         => null,
-        Munk_MusicBrainz::INC_RELEASE_GROUPS  => null,
-        Munk_MusicBrainz::INC_ARTIST_RELS     => null,
-        Munk_MusicBrainz::INC_LABEL_RELS      => null,
-        Munk_MusicBrainz::INC_RELEASE_RELS    => null,
-        Munk_MusicBrainz::INC_TRACK_RELS      => null,
-        Munk_MusicBrainz::INC_URL_RELS        => null,
-        Munk_MusicBrainz::INC_TAGS            => null,
-        Munk_MusicBrainz::INC_RATINGS         => null,
-        //Munk_MusicBrainz::INC_USER_TAGS       => null,
-        //Munk_MusicBrainz::INC_USER_RATINGS    => null,
-        Munk_MusicBrainz::INC_COUNTS          => null,
-        Munk_MusicBrainz::INC_RELEASE_EVENTS  => null,
-        Munk_MusicBrainz::INC_DISCS           => null,
-        //Munk_MusicBrainz::INC_LABELS          => null,
+        self::ALIASES         => null,
+        self::RELEASE_GROUPS  => null,
+        self::ARTIST_RELS     => null,
+        self::LABEL_RELS      => null,
+        self::RELEASE_RELS    => null,
+        self::TRACK_RELS      => null,
+        self::URL_RELS        => null,
+        self::TAGS            => null,
+        self::RATINGS         => null,
+        self::USER_TAGS       => null,
+        self::USER_RATINGS    => null,
+        self::COUNTS          => null,
+        self::RELEASE_EVENTS  => null,
+        self::DISCS           => null,
+        self::LABELS          => null,
     );
     
     /**
@@ -42,6 +61,15 @@ class Munk_MusicBrainz_Inc_Artist extends Munk_MusicBrainz_Inc_Abstract
         self::SA => array(),
         self::VA => array(),
     );
+    
+    /**
+     * 
+     */
+    public function init()
+    {
+        // when labels is set server return errors
+        $this->_needsAuth[] = self::LABELS;
+    }
     
     /**
      * 
@@ -94,6 +122,8 @@ class Munk_MusicBrainz_Inc_Artist extends Munk_MusicBrainz_Inc_Abstract
      * @param string $key
      * @param array|string $type
      * @param mixed $value
+     * 
+     * @return Munk_MusicBrainz_Inc_Artist
      */
     protected function _setRelease($key, $type, $value)
     {
@@ -107,6 +137,8 @@ class Munk_MusicBrainz_Inc_Artist extends Munk_MusicBrainz_Inc_Abstract
     /**
      * 
      * @param string $type
+     * 
+     * @return string
      */
     public function getSa($type)
     {
@@ -116,6 +148,8 @@ class Munk_MusicBrainz_Inc_Artist extends Munk_MusicBrainz_Inc_Abstract
     /**
      * 
      * @param string $type
+     * 
+     * @return string
      */
     public function getVa($type)
     {
@@ -125,6 +159,7 @@ class Munk_MusicBrainz_Inc_Artist extends Munk_MusicBrainz_Inc_Abstract
     /**
      * 
      * @param  array|string $value
+     * 
      * @return Munk_MusicBrainz_Inc_Artist
      */
     public function setSa($type, $value = true)
@@ -135,6 +170,7 @@ class Munk_MusicBrainz_Inc_Artist extends Munk_MusicBrainz_Inc_Abstract
     /**
      * 
      * @param  array|string $value
+     * 
      * @return Munk_MusicBrainz_Inc_Artist
      */
     public function setVa($type, $value = true)
