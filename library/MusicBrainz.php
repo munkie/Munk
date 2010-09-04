@@ -15,6 +15,8 @@ class Munk_MusicBrainz
     const TYPE_TRACK         = 'Track';
     const TYPE_LABEL         = 'Label';
     
+    const TYPE_ALIAS         = 'Alias';
+    
     /**
      * 
      * @var incs

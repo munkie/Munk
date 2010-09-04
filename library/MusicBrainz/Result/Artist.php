@@ -30,13 +30,10 @@ class Munk_MusicBrainz_Result_Artist extends Munk_MusicBrainz_Result_Abstract
         'type'            => null,
         'quality'         => null,
         'disambiguation'  => null,
+        // incs
+        'releases'        => null,
+        'aliases'         => null,
     );
-    
-    /**
-     * 
-     * @var Munk_MusicBrainz_ResultSet_Release
-     */
-    protected $_releases;
     
     /**
      * @return string
@@ -44,31 +41,5 @@ class Munk_MusicBrainz_Result_Artist extends Munk_MusicBrainz_Result_Abstract
     public function getGid()
     {
         return $this->mbid;
-    }
-    
-    /**
-     * 
-     * @param $releases
-     */
-    public function setReleases(Munk_MusicBrainz_ResultSet_Release $releases)
-    {
-        $this->_releases = $releases;
-        return $this;
-    }
-    
-    public function getReleases()
-    {
-        return $this->_releases;
-    }
-    
-    public function issetReleases()
-    {
-        return null !== $this->_releases;
-    }
-    
-    public function unsetReleases()
-    {
-        $this->_releases = null;
-        return $this;
     }
 }

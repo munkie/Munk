@@ -69,22 +69,6 @@ abstract class Munk_MusicBrainz_Adapter_Rest_Mapper_Abstract
     }
     
     /**
-     * @return string
-     */
-    public function getResultTag()
-    {
-        return $this->_resultTag;
-    }
-    
-    /**
-     * @return string
-     */
-    public function getResultSetTag()
-    {
-        return $this->_resultSetTag;
-    }
-    
-    /**
      * @return Munk_MusicBrainz_Result_Abstract
      */
     public function getResult(SimpleXMLElement $item = null)

@@ -54,7 +54,7 @@ abstract class Munk_MusicBrainz_ResultSet_Abstract implements Munk_MusicBrainz_R
         if (null === $this->_resultClass) {
             $className = get_class($this);
             if (0 === strpos($className, 'Munk_MusicBrainz_ResultSet_')) {
-                $this->_resultClass = 'Munk_MusicBrainz_ResultSet_' . substr($className, 23);
+                $this->_resultClass = 'Munk_MusicBrainz_Result_' . substr($className, 27);
             }
         }
         
