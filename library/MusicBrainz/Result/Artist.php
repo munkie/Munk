@@ -34,6 +34,7 @@ class Munk_MusicBrainz_Result_Artist extends Munk_MusicBrainz_Result_Abstract
         'releases'        => null,
         'aliases'         => null,
         'tags'            => null,
+        'rating'          => null,
     );
     
     /**
