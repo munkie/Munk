@@ -203,6 +203,14 @@ abstract class Munk_MusicBrainz_ResultSet_Abstract implements Munk_MusicBrainz_R
     }
     
     /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->_data;
+    }
+    
+    /**
      * 
      * @param string $type
      * @param mixed  $data

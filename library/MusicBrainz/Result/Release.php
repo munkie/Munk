@@ -16,6 +16,7 @@
  * @property Munk_MusicBrainz_ResultSet_Tags    $tags
  * @property Munk_MusicBrainz_Result_Rating     $rating
  * @property Munk_MusicBrainz_Result_ReleaseGroup     $releaseGroup
+ * @property Munk_MusicBrainz_ResultSet_Event $events
  */
 class Munk_MusicBrainz_Result_Release extends Munk_MusicBrainz_Result_Abstract
 {
@@ -44,6 +45,7 @@ class Munk_MusicBrainz_Result_Release extends Munk_MusicBrainz_Result_Abstract
         'tags'          => null,
         'rating'        => null,
         'releasegroup'  => null,
+        'events'        => null,
     );
     
     /**
@@ -69,5 +71,19 @@ class Munk_MusicBrainz_Result_Release extends Munk_MusicBrainz_Result_Abstract
     {
         $url = "http://ec1.images-amazon.com/images/P/{$this->asin}.{$server}.{$size}ZZZZZZZ.jpg";
         return $url;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getDate()
+    {
+        if ($this->events instanceof Munk_MusicBrainz_ResultSet_Event) {
+            $oldestEvent = $this->events->findOldestEvent();
+            if ($oldestEvent instanceof Munk_MusicBrainz_Result_Event) {
+                return $oldestEvent->date;
+            }
+        }
+        return null;
     }
 }
